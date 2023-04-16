@@ -8,7 +8,7 @@ import {
 	TextDocumentSyncKind,
 } from 'vscode-languageserver-protocol';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type winston from 'winston';
 
 import { getFixes } from '../utils/documents';
@@ -260,7 +260,7 @@ export class StylelintLanguageServer {
 	 */
 	async #lintDocument(
 		document: TextDocument,
-		linterOptions: Partial<stylelint.LinterOptions> = {},
+		linterOptions: Partial<Ec0lintStyle.LinterOptions> = {},
 	): Promise<LintDiagnostics | undefined> {
 		this.#logger?.debug('Linting document', { uri: document.uri, linterOptions });
 
@@ -285,7 +285,7 @@ export class StylelintLanguageServer {
 	 */
 	async #getFixes(
 		document: TextDocument,
-		linterOptions: stylelint.LinterOptions = {},
+		linterOptions: Ec0lintStyle.LinterOptions = {},
 	): Promise<TextEdit[]> {
 		try {
 			const options = await this.#getOptions(document.uri);

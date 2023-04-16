@@ -2,7 +2,7 @@ import { isIterableObject } from '../iterables';
 import type { Connection } from 'vscode-languageserver';
 import type { InvalidOptionError } from '../stylelint';
 // eslint-disable-next-line node/no-unpublished-import
-import { ConfigurationError } from 'stylelint';
+import { ConfigurationError } from 'ec0lint-style';
 
 /**
  * Takes an error and displays it in the UI using the given connection.

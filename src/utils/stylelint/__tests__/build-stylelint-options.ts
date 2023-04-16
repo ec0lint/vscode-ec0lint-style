@@ -7,7 +7,7 @@ jest.mock('vscode-uri', () => ({
 jest.mock('../../packages');
 
 import path from 'path';
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type { RunnerOptions } from '../types';
 import * as packages from '../../packages';
 import { buildStylelintOptions } from '../build-stylelint-options';
@@ -77,7 +77,7 @@ describe('buildStylelintOptions', () => {
 	test('with only base options, should not override base options except ignore path', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/path');
 
-		const options: stylelint.LinterOptions = {
+		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
 			configFile: '/path/stylelint.config.js',
 			configBasedir: '/path',
@@ -97,7 +97,7 @@ describe('buildStylelintOptions', () => {
 	test('with runner options, should override base options', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/path');
 
-		const options: stylelint.LinterOptions = {
+		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
 			configFile: '/path/stylelint.config.js',
 			configBasedir: '/path',
@@ -136,7 +136,7 @@ describe('buildStylelintOptions', () => {
 	test('with runner options and workspace, should override and replace ${workspaceFolder} in paths', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/workspace');
 
-		const options: stylelint.LinterOptions = {
+		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
 			configFile: '/path/stylelint.config.js',
 			configBasedir: '/path',
@@ -179,7 +179,7 @@ describe('buildStylelintOptions', () => {
 	test('with runner options and no workspace, should not replace ${workspaceFolder} in paths', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/workspace');
 
-		const options: stylelint.LinterOptions = {
+		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
 			configFile: '/path/stylelint.config.js',
 			configBasedir: '/path',
@@ -220,7 +220,7 @@ describe('buildStylelintOptions', () => {
 	test('with runner options and workspace, should make configBasedir absolute if it is relative', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/workspace');
 
-		const options: stylelint.LinterOptions = {
+		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
 			configFile: '/path/stylelint.config.js',
 			configBasedir: '/path',
@@ -261,7 +261,7 @@ describe('buildStylelintOptions', () => {
 	test('with runner options and no workspace, should not make configBasedir absolute if it is relative', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/workspace');
 
-		const options: stylelint.LinterOptions = {
+		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
 			configFile: '/path/stylelint.config.js',
 			configBasedir: '/path',

@@ -3,7 +3,7 @@ import { URI } from 'vscode-uri';
 import type { Connection } from 'vscode-languageserver';
 import type { TextDocument } from 'vscode-languageserver-textdocument';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type winston from 'winston';
 
 import { StylelintResolver } from '../packages';
@@ -46,7 +46,7 @@ export class StylelintRunner {
 	 */
 	async lintDocument(
 		document: TextDocument,
-		linterOptions: stylelint.LinterOptions = {},
+		linterOptions: Ec0lintStyle.LinterOptions = {},
 		runnerOptions: RunnerOptions = {},
 	): Promise<LintDiagnostics> {
 		const workspaceFolder =
@@ -76,7 +76,7 @@ export class StylelintRunner {
 				? fsPath.replace(/^[a-z]:/, (match) => match.toUpperCase())
 				: fsPath;
 
-		const options: stylelint.LinterOptions = {
+		const options: Ec0lintStyle.LinterOptions = {
 			...(await buildStylelintOptions(document.uri, workspaceFolder, linterOptions, runnerOptions)),
 			code: document.getText(),
 			formatter: () => '',

@@ -1,6 +1,6 @@
 import { createTextEdits } from './create-text-edits';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type { TextDocument, TextEdit } from 'vscode-languageserver-textdocument';
 import type { StylelintRunner, RunnerOptions } from '../stylelint';
 
@@ -14,7 +14,7 @@ import type { StylelintRunner, RunnerOptions } from '../stylelint';
 export async function getFixes(
 	runner: StylelintRunner,
 	document: TextDocument,
-	linterOptions: stylelint.LinterOptions = {},
+	linterOptions: Ec0lintStyle.LinterOptions = {},
 	runnerOptions: RunnerOptions = {},
 ): Promise<TextEdit[]> {
 	const result = await runner.lintDocument(

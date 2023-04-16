@@ -1,5 +1,5 @@
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type { StylelintRunner } from '../../stylelint';
 import type { RunnerOptions } from '../../stylelint';
 
@@ -17,7 +17,7 @@ describe('getFixes', () => {
 	test('should call lintDocument with given options and fix set to true', async () => {
 		const document = createDocument('a { color: red; }');
 		const runner = createMockRunner('a { color: red; }');
-		const linterOptions: stylelint.LinterOptions = {
+		const linterOptions: Ec0lintStyle.LinterOptions = {
 			config: {
 				customSyntax: 'postcss-scss',
 			},

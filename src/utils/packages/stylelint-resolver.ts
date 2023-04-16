@@ -3,7 +3,7 @@ import { createRequire } from 'module';
 import path from 'path';
 import process from 'process';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 
 import type winston from 'winston';
 import { Connection, Files } from 'vscode-languageserver/node';
@@ -122,7 +122,7 @@ export class StylelintResolver {
 		try {
 			const rootRelativeRequire = createRequire(pnpPath);
 
-			const stylelintEntryPath = rootRelativeRequire.resolve('stylelint');
+			const stylelintEntryPath = rootRelativeRequire.resolve('ec0lint-style');
 			const stylelintPath = await findPackageRoot(stylelintEntryPath);
 
 			if (!stylelintPath) {
@@ -133,10 +133,10 @@ export class StylelintResolver {
 				return undefined;
 			}
 
-			const stylelint = rootRelativeRequire('stylelint') as stylelint.PublicApi;
+			const Ec0lintStyle = rootRelativeRequire('ec0lint-style') as Ec0lintStyle.PublicApi;
 
 			const result = {
-				stylelint,
+				stylelint:Ec0lintStyle,
 				resolvedPath: stylelintPath,
 			};
 
@@ -162,11 +162,11 @@ export class StylelintResolver {
 		trace: TracerFn,
 	): Promise<StylelintResolutionResult | undefined> {
 		try {
-			const stylelintPath = await Files.resolve('stylelint', globalModulesPath, cwd, trace);
+			const stylelintPath = await Files.resolve('ec0lint-style', globalModulesPath, cwd, trace);
 
 			const result = {
 				// eslint-disable-next-line @typescript-eslint/no-var-requires
-				stylelint: require(stylelintPath) as stylelint.PublicApi,
+				stylelint: require(stylelintPath) as Ec0lintStyle.PublicApi,
 				resolvedPath: stylelintPath,
 			};
 
@@ -220,7 +220,7 @@ export class StylelintResolver {
 			const requirePath = await this.#getRequirePath(stylelintPath, getWorkspaceFolderFn);
 
 			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			const stylelint = require(requirePath) as stylelint.PublicApi;
+			const stylelint = require(requirePath) as Ec0lintStyle.PublicApi;
 
 			if (stylelint && typeof stylelint.lint === 'function') {
 				return {

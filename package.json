@@ -194,6 +194,7 @@
   },
   "dependencies": {
     "@types/triple-beam": "^1.3.2",
+    "ec0lint-style": "^2.1.1",
     "fast-diff": "^1.2.0",
     "path-is-inside": "^1.0.2",
     "rfdc": "^1.3.0",

@@ -1,6 +1,6 @@
 import { warningToDiagnostic } from './warning-to-diagnostic';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import { LintDiagnostics, InvalidOptionError } from './types';
 
 /**
@@ -16,8 +16,8 @@ import { LintDiagnostics, InvalidOptionError } from './types';
  * @param result The results returned by Stylelint.
  */
 export function processLinterResult(
-	stylelint: stylelint.PublicApi,
-	{ results, output, ruleMetadata }: stylelint.LinterResult,
+	stylelint: Ec0lintStyle.PublicApi,
+	{ results, output }: Ec0lintStyle.LinterResult,
 ): LintDiagnostics {
 	if (results.length === 0) {
 		return { diagnostics: [] };
@@ -33,9 +33,7 @@ export function processLinterResult(
 		throw new InvalidOptionError(invalidOptionWarnings);
 	}
 
-	if (!ruleMetadata) {
-		// Create built-in rule metadata for backwards compatibility.
-		ruleMetadata = new Proxy(
+	const ruleMetadata = new Proxy(
 			{},
 			{
 				get: (_, key: string) => {
@@ -43,7 +41,7 @@ export function processLinterResult(
 				},
 			},
 		);
-	}
+
 
 	const diagnostics = warnings.map((warning) => warningToDiagnostic(warning, ruleMetadata));
 

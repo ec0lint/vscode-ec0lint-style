@@ -1,6 +1,6 @@
 import type LSP from 'vscode-languageserver-protocol';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type { PackageManager } from '../packages';
 
 /**
@@ -33,7 +33,7 @@ export enum DisableReportRuleNames {
  * Stylelint runner options.
  */
 export type RunnerOptions = {
-	config?: stylelint.Config | null;
+	config?: Ec0lintStyle.Config | null;
 	configBasedir?: string;
 	configFile?: string;
 	customSyntax?: string;

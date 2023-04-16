@@ -3,7 +3,7 @@ import pathIsInside from 'path-is-inside';
 import { URI } from 'vscode-uri';
 import { findPackageRoot } from '../packages';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type { RunnerOptions } from './types';
 
 /**
@@ -13,7 +13,7 @@ import type { RunnerOptions } from './types';
 export async function buildStylelintOptions(
 	uri: string,
 	workspaceFolder?: string,
-	baseOptions: Partial<stylelint.LinterOptions> = {},
+	baseOptions: Partial<Ec0lintStyle.LinterOptions> = {},
 	{
 		config,
 		configFile,
@@ -24,7 +24,7 @@ export async function buildStylelintOptions(
 		reportNeedlessDisables,
 		reportInvalidScopeDisables,
 	}: RunnerOptions = {},
-): Promise<Partial<stylelint.LinterOptions>> {
+): Promise<Partial<Ec0lintStyle.LinterOptions>> {
 	const options = {
 		...baseOptions,
 

@@ -1,5 +1,5 @@
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 
 /**
  * Package manager identifiers.
@@ -18,7 +18,7 @@ export type ResolverOptions = {
  * Stylelint package resolution result.
  */
 export type StylelintResolutionResult = {
-	stylelint: stylelint.PublicApi;
+	stylelint: Ec0lintStyle.PublicApi;
 	resolvedPath: string;
 };
 

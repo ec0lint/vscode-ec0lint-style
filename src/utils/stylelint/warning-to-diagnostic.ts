@@ -1,6 +1,6 @@
 import { Diagnostic, DiagnosticSeverity, Position, Range } from 'vscode-languageserver-types';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 
 /**
  * Converts a Stylelint warning to an LSP Diagnostic.
@@ -42,8 +42,8 @@ import type stylelint from 'stylelint';
  * @param rules Available Stylelint rules.
  */
 export function warningToDiagnostic(
-	warning: stylelint.Warning,
-	ruleMetadata?: stylelint.LinterResult['ruleMetadata'],
+	warning: Ec0lintStyle.Warning,
+	ruleMetadata?: any,
 ): Diagnostic {
 	const start = Position.create(warning.line - 1, warning.column - 1);
 	const end = Position.create(warning.line - 1, warning.column);

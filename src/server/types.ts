@@ -4,7 +4,7 @@ import type { TextDocument, TextEdit } from 'vscode-languageserver-textdocument'
 import { CodeActionKind as VSCodeActionKind } from 'vscode-languageserver-types';
 import type LSP from 'vscode-languageserver-protocol';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type winston from 'winston';
 import type { StylelintRunner, LintDiagnostics } from '../utils/stylelint';
 import type { ExtractKeysOfValueType } from '../utils/types';
@@ -104,7 +104,7 @@ export interface LanguageServerContext {
 	 * @param linterOptions Options to pass to the linter. Overridden by the
 	 * language server options.
 	 */
-	getFixes(document: TextDocument, linterOptions?: stylelint.LinterOptions): Promise<TextEdit[]>;
+	getFixes(document: TextDocument, linterOptions?: Ec0lintStyle.LinterOptions): Promise<TextEdit[]>;
 
 	/**
 	 * Lints a document using Stylelint and returns diagnostics.
@@ -114,7 +114,7 @@ export interface LanguageServerContext {
 	 */
 	lintDocument(
 		document: TextDocument,
-		linterOptions?: Partial<stylelint.LinterOptions>,
+		linterOptions?: Partial<Ec0lintStyle.LinterOptions>,
 	): Promise<LintDiagnostics | undefined>;
 
 	/**
@@ -221,7 +221,7 @@ export type LanguageServerOptions = {
 			location: 'separateLine' | 'sameLine';
 		};
 	};
-	config?: stylelint.Config | null;
+	config?: Ec0lintStyle.Config | null;
 	configBasedir?: string;
 	configFile?: string;
 	customSyntax?: string;
