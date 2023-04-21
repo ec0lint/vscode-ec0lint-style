@@ -18,7 +18,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 	const api: PublicApi = Object.assign(new EventEmitter(), { codeActionReady: false });
 
 	const client = new LanguageClient(
-		'Stylelint',
+		'Ec0lintStyle',
 		{
 			run: {
 				module: serverPath,
@@ -32,7 +32,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 		},
 		{
 			documentSelector: [{ scheme: 'file' }, { scheme: 'untitled' }],
-			diagnosticCollectionName: 'Stylelint',
+			diagnosticCollectionName: 'Ec0lintStyle',
 			synchronize: {
 				fileEvents: workspace.createFileSystemWatcher(
 					'**/{.stylelintrc{,.js,.json,.yaml,.yml},stylelint.config.js,.stylelintignore}',
@@ -59,7 +59,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 		})
 		.catch(async (error) => {
 			await window.showErrorMessage(
-				`Stylelint: ${error instanceof Error ? error.message : String(error)}`,
+				`Ec0lintStyle: ${error instanceof Error ? error.message : String(error)}`,
 			);
 		});
 
@@ -83,7 +83,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 
 			await client.sendRequest(ExecuteCommandRequest.type, params).then(undefined, async () => {
 				await window.showErrorMessage(
-					'Failed to apply Stylelint fixes to the document. Please consider opening an issue with steps to reproduce.',
+					'Failed to apply ec0lint-style fixes to the document. Please consider opening an issue with steps to reproduce.',
 				);
 			});
 		}),

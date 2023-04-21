@@ -1,14 +1,14 @@
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import type Ec0lintStyle from 'ec0lint-style';
-import type { StylelintRunner } from '../../stylelint';
-import type { RunnerOptions } from '../../stylelint';
+import type { Ec0lintRunner } from '../../ec0lint-style';
+import type { RunnerOptions } from '../../ec0lint-style';
 
 import { getFixes } from '../get-fixes';
 
 const createMockRunner = (output?: string) =>
 	({
 		lintDocument: jest.fn(async () => ({ diagnostics: [], output })),
-	} as unknown as StylelintRunner);
+	} as unknown as Ec0lintRunner);
 
 const createDocument = (code: string) =>
 	TextDocument.create('file:///path/test.css', 'css', 1, code);
@@ -44,7 +44,7 @@ describe('getFixes', () => {
 		);
 	});
 
-	test('should return no edits if Stylelint returned no output', async () => {
+	test('should return no edits if Ec0lint returned no output', async () => {
 		const document = createDocument(`
 			a {
 				color: red;
@@ -64,7 +64,7 @@ describe('getFixes', () => {
 		expect(fixes).toEqual([]);
 	});
 
-	test('should return no edits if Stylelint made no changes', async () => {
+	test('should return no edits if Ec0lint made no changes', async () => {
 		const document = createDocument(`
 			a {
 				color: red;
@@ -96,7 +96,7 @@ describe('getFixes', () => {
 		expect(fixes).toEqual([]);
 	});
 
-	test('should return edits if Stylelint made changes', async () => {
+	test('should return edits if Ec0lint made changes', async () => {
 		const document = createDocument(`
 			a {
 				color: red;

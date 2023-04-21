@@ -1,7 +1,7 @@
 import path from 'path';
 import { createConnection, ProposedFeatures } from 'vscode-languageserver/node';
 import winston from 'winston';
-import { StylelintLanguageServer, modules } from '../server';
+import { Ec0lintStyleLanguageServer as Ec0lintLanguageServer, modules } from '../server';
 
 const connection = createConnection(ProposedFeatures.all);
 
@@ -40,7 +40,7 @@ if (level === 'debug') {
 
 const logger = winston.createLogger({ level, transports });
 
-const server = new StylelintLanguageServer({
+const server = new Ec0lintLanguageServer({
 	connection,
 	logger,
 	modules: Object.values(modules),

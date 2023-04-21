@@ -1,7 +1,7 @@
 import { join, resolve } from 'path';
 import { pathToFileURL } from 'url';
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import { StylelintRunner } from '../../../src/utils/stylelint';
+import { Ec0lintRunner as Ec0lintStyleRunner } from '../../../src/utils/ec0lint-style';
 
 const createDocument = (uri: string | null, languageId: string, contents: string): TextDocument =>
 	TextDocument.create(
@@ -14,7 +14,7 @@ const createDocument = (uri: string | null, languageId: string, contents: string
 describe('StylelintRunner', () => {
 	test('should be resolved with diagnostics when it lints CSS successfully', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument(null, 'css', '  a[id="id"]{}'), {
 			config: {
 				rules: {
@@ -29,7 +29,7 @@ describe('StylelintRunner', () => {
 
 	test('should be resolved with an empty array when no errors and warnings are reported', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument(null, 'scss', ''), {
 			config: {
 				customSyntax: 'postcss-scss',
@@ -42,7 +42,7 @@ describe('StylelintRunner', () => {
 
 	test('should be resolved with one diagnostic when the CSS is broken', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		// TODO: Restore once postcss-markdown is PostCSS 8 compatible
 		// 		const result = await runner.lintDocument(
 		// 			createDocument(
@@ -83,7 +83,7 @@ describe('StylelintRunner', () => {
 
 	test('should be resolved even if no configs are defined', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		// TODO: Restore once postcss-html is PostCSS 8 compatible
 		// const result = await runner.lintDocument(createDocument(null, 'plaintext', '<style>a{}</style>'), {
 		// 	customSyntax: 'postcss-html',
@@ -97,7 +97,7 @@ describe('StylelintRunner', () => {
 
 	test('should support `.stylelintignore`.', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument('listed-in-stylelintignore.css', 'css', '}'),
 			{
@@ -110,7 +110,7 @@ describe('StylelintRunner', () => {
 
 	test('should support CSS-in-JS with customSyntax', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				null,
@@ -135,7 +135,7 @@ font: normal
 
 	test('should set `codeFilename` option from a TextDocument', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				'should-be-ignored.xml',
@@ -159,7 +159,7 @@ a { color: #000 }
 
 	test('should support `processors` option', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument('processors.tsx', 'typescriptreact', 'styled.p`"`'),
 			{
@@ -175,7 +175,7 @@ a { color: #000 }
 
 	test('should check CSS syntax even if no configuration is provided', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument('unclosed.css', 'css', 'a{color:rgba(}'),
 		);
@@ -185,7 +185,7 @@ a { color: #000 }
 
 	test('should check CSS syntax even if no rule is provided', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		// TODO: Restore once postcss-html is PostCSS 8 compatible
 		// const result = await runner.lintDocument(createDocument('at.xsl', 'xsl', '<style>@</style>'), {
 		// 	customSyntax: 'postcss-html',
@@ -199,7 +199,7 @@ a { color: #000 }
 
 	test('should be resolved even if no rules are defined', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument('no-rules.css', 'css', 'a{}'), {
 			config: {},
 		});
@@ -209,7 +209,7 @@ a { color: #000 }
 
 	test('should reject with a reason when it takes incorrect options', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const promise = runner.lintDocument(
 			createDocument('invalid-options.css', 'css', '  a[id="id"]{}'),
 			{
@@ -228,7 +228,7 @@ a { color: #000 }
 
 	test('should be resolved with diagnostics when the rules include unknown rules', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument('unknown-rule.css', 'css', 'b{}'), {
 			config: {
 				rules: {
@@ -243,7 +243,7 @@ a { color: #000 }
 
 	test('should be resolved with diagnostic plugin rule URL', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument('unknown-rule.scss', 'scss', '@unknown (max-width: 960px) {}'),
 			{
@@ -263,7 +263,7 @@ a { color: #000 }
 describe('StylelintRunner with a configuration file', () => {
 	test('should adhere to configuration file settings', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				join(__dirname, 'has-config-file.tsx'),
@@ -286,7 +286,7 @@ const what: string = "is this";
 describe('StylelintRunner with auto-fix', () => {
 	test('auto-fix should work properly if configs are defined', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument(null, 'css', 'a\n{\ncolor:red;\n}'), {
 			config: { rules: { indentation: [2] } },
 			fix: true,
@@ -297,7 +297,7 @@ describe('StylelintRunner with auto-fix', () => {
 
 	test('auto-fix should only work properly for syntax errors if no rules are defined', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument('no-rules.css', 'css', 'a {'), {
 			config: {},
 			fix: true,
@@ -308,7 +308,7 @@ describe('StylelintRunner with auto-fix', () => {
 
 	test('JS file auto-fix should not change the content if no rules are defined', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument('no-rules.js', 'javascript', '"a"'), {
 			customSyntax: '@stylelint/postcss-css-in-js',
 			config: {},
@@ -320,7 +320,7 @@ describe('StylelintRunner with auto-fix', () => {
 
 	test('auto-fix should ignore if the file matches the ignoreFiles', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument('should-be-ignored.js', 'javascript', '"a"'),
 			{
@@ -338,7 +338,7 @@ describe('StylelintRunner with auto-fix', () => {
 
 	test('auto-fix should work if there is syntax errors in css', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				'test.css',
@@ -361,7 +361,7 @@ describe('StylelintRunner with auto-fix', () => {
 
 	test('auto-fix should ignore if there is syntax errors in scss', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				'test.scss',
@@ -384,7 +384,7 @@ describe('StylelintRunner with auto-fix', () => {
 	});
 
 	test('auto-fix should work if there are errors that cannot be auto-fixed', async () => {
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				'test.css',
@@ -414,7 +414,7 @@ unknown {
 describe('StylelintRunner with customSyntax', () => {
 	test('should work properly if customSyntax is defined', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument('test.css', 'css', 'a\n   color:red'), {
 			config: { rules: { indentation: [2] } },
 			customSyntax: 'postcss-sass',
@@ -425,7 +425,7 @@ describe('StylelintRunner with customSyntax', () => {
 
 	test('auto-fix should work properly if customSyntax is defined', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(createDocument('test.css', 'css', 'a\n   color:red'), {
 			config: { rules: { indentation: [2] } },
 			customSyntax: 'postcss-sass',
@@ -439,7 +439,7 @@ describe('StylelintRunner with customSyntax', () => {
 describe('StylelintRunner with reportDescriptionlessDisables', () => {
 	test('should work properly if reportDescriptionlessDisables is true', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				'test.css',
@@ -485,7 +485,7 @@ describe('StylelintRunner with reportDescriptionlessDisables', () => {
 describe('StylelintRunner with reportNeedlessDisables', () => {
 	test('should work properly if reportNeedlessDisables is true', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				'test.css',
@@ -525,7 +525,7 @@ describe('StylelintRunner with reportNeedlessDisables', () => {
 describe('StylelintRunner with reportInvalidScopeDisables', () => {
 	test('should work properly if reportInvalidScopeDisables is true', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument(
 				'test.css',
@@ -559,14 +559,14 @@ describe('StylelintRunner with reportInvalidScopeDisables', () => {
 describe('StylelintRunner with stylelintPath', () => {
 	test('should work properly if stylelintPath is defined', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument('test.css', 'css', 'a{\n   color:red}'),
 			{
 				config: { rules: { indentation: [2] } },
 			},
 			{
-				stylelintPath: resolve(__dirname, '../../../node_modules/stylelint'),
+				stylelintPath: resolve(__dirname, '../../../node_modules/ec0lint-style'),
 			},
 		);
 
@@ -575,7 +575,7 @@ describe('StylelintRunner with stylelintPath', () => {
 
 	test('should work properly if custom path is defined in stylelintPath', async () => {
 		expect.assertions(1);
-		const runner = new StylelintRunner();
+		const runner = new Ec0lintStyleRunner();
 		const result = await runner.lintDocument(
 			createDocument('test.css', 'css', 'a{\n   color:red}'),
 			{

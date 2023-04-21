@@ -14,8 +14,8 @@ import type winston from 'winston';
 import { getFixes } from '../utils/documents';
 import { displayError, CommandManager, NotificationManager } from '../utils/lsp';
 import { mergeAssign, mergeOptionsWithDefaults } from '../utils/objects';
-import { StylelintRunner, LintDiagnostics } from '../utils/stylelint';
-import { StylelintResolver, StylelintResolutionResult } from '../utils/packages';
+import { Ec0lintRunner as Ec0lintStyleRunner, LintDiagnostics } from '../utils/ec0lint-style';
+import { Ec0lintResolver as Ec0lintStyleResolver, Ec0lintStyleResolutionResult } from '../utils/packages';
 import {
 	LanguageServerOptions,
 	LanguageServerContext,
@@ -42,14 +42,14 @@ const defaultOptions: LanguageServerOptions = {
 	reportInvalidScopeDisables: false,
 	reportNeedlessDisables: false,
 	snippet: ['css', 'postcss'],
-	stylelintPath: '',
+	ec0lintStylePath: '',
 	validate: ['css', 'postcss'],
 };
 
 /**
- * Stylelint language server.
+ * ec0lint-style language server.
  */
-export class StylelintLanguageServer {
+export class Ec0lintStyleLanguageServer {
 	/**
 	 * The language server connection.
 	 */
@@ -77,14 +77,14 @@ export class StylelintLanguageServer {
 	#globalOptions: LanguageServerOptions;
 
 	/**
-	 * The resolver used to resolve the Stylelint package.
+	 * The resolver used to resolve the ec0lint-style package.
 	 */
-	#resolver: StylelintResolver;
+	#resolver: Ec0lintStyleResolver;
 
 	/**
-	 * The runner used to run Stylelint.
+	 * The runner used to run ec0lint-style.
 	 */
-	#runner: StylelintRunner;
+	#runner: Ec0lintStyleRunner;
 
 	/**
 	 * The text document manager.
@@ -112,7 +112,7 @@ export class StylelintLanguageServer {
 	#scopedOptions = new Map<string, LanguageServerOptions>();
 
 	/**
-	 * Creates a new Stylelint language server.
+	 * Creates a new ec0lint-style language server.
 	 */
 	constructor({ connection, logger, modules }: LanguageServerConstructorParameters) {
 		this.#connection = connection;
@@ -120,8 +120,8 @@ export class StylelintLanguageServer {
 		this.#notifications = new NotificationManager(connection, this.#logger);
 		this.#commands = new CommandManager(connection, this.#logger);
 		this.#globalOptions = defaultOptions;
-		this.#resolver = new StylelintResolver(connection, this.#logger);
-		this.#runner = new StylelintRunner(connection, this.#logger, this.#resolver);
+		this.#resolver = new Ec0lintStyleResolver(connection, this.#logger);
+		this.#runner = new Ec0lintStyleRunner(connection, this.#logger, this.#resolver);
 		this.#documents = new TextDocuments(TextDocument);
 		this.#context = {
 			connection: this.#connection,
@@ -134,7 +134,7 @@ export class StylelintLanguageServer {
 			getFixes: this.#getFixes.bind(this),
 			displayError: this.#displayError.bind(this),
 			lintDocument: this.#lintDocument.bind(this),
-			resolveStylelint: this.#resolveStylelint.bind(this),
+			resolveEc0lintStyle: this.#resolveEc0lintStyle.bind(this),
 		};
 
 		const contextReadOnlyProxy = new Proxy(this.#context, {
@@ -227,10 +227,10 @@ export class StylelintLanguageServer {
 	}
 
 	/**
-	 * Resolves the Stylelint package for the given document.
+	 * Resolves the ec0lint-style package for the given document.
 	 */
-	async #resolveStylelint(document: TextDocument): Promise<StylelintResolutionResult | undefined> {
-		this.#logger?.debug('Resolving Stylelint', { uri: document.uri });
+	async #resolveEc0lintStyle(document: TextDocument): Promise<Ec0lintStyleResolutionResult | undefined> {
+		this.#logger?.debug('Resolving Ec0lintStyle', { uri: document.uri });
 
 		try {
 			const options = await this.#getOptions(document.uri);
@@ -238,25 +238,25 @@ export class StylelintLanguageServer {
 			const result = await this.#resolver.resolve(options, document);
 
 			if (result) {
-				this.#logger?.debug('Stylelint resolved', {
+				this.#logger?.debug('Ec0lintStyle resolved', {
 					uri: document.uri,
 					resolvedPath: result.resolvedPath,
 				});
 			} else {
-				this.#logger?.warn('Failed to resolve Stylelint', { uri: document.uri });
+				this.#logger?.warn('Failed to resolve Ec0lintStyle', { uri: document.uri });
 			}
 
 			return result;
 		} catch (error) {
 			this.#displayError(error);
-			this.#logger?.error('Error resolving Stylelint', { uri: document.uri, error });
+			this.#logger?.error('Error resolving Ec0lintStyle', { uri: document.uri, error });
 
 			return undefined;
 		}
 	}
 
 	/**
-	 * Lints a document using Stylelint.
+	 * Lints a document using ec0lint-style.
 	 */
 	async #lintDocument(
 		document: TextDocument,
@@ -281,7 +281,7 @@ export class StylelintLanguageServer {
 	}
 
 	/**
-	 * Gets text edits for fixes made by Stylelint.
+	 * Gets text edits for fixes made by ec0lint-style.
 	 */
 	async #getFixes(
 		document: TextDocument,

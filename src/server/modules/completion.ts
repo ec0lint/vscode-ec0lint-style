@@ -3,7 +3,7 @@ import type { TextDocument } from 'vscode-languageserver-textdocument';
 import type LSP from 'vscode-languageserver-protocol';
 import { getDisableType } from '../../utils/documents';
 import { createDisableCompletionItem } from '../../utils/lsp';
-import { DisableMetadataLookupTable, DisableReportRuleNames } from '../../utils/stylelint';
+import { DisableMetadataLookupTable, DisableReportRuleNames } from '../../utils/ec0lint-style';
 import type {
 	LanguageServerContext,
 	LanguageServerModuleConstructorParameters,

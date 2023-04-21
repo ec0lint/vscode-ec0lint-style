@@ -13,7 +13,7 @@ import { Connection, Files } from 'vscode-languageserver/node';
 import type { TextDocument } from 'vscode-languageserver-textdocument';
 import { GlobalPathResolver } from '../global-path-resolver';
 import { findPackageRoot } from '../find-package-root';
-import { StylelintResolver } from '../stylelint-resolver';
+import { Ec0lintResolver } from '../stylelint-resolver';
 import type { Stats } from 'fs';
 import type { PackageManager } from '..';
 
@@ -121,14 +121,14 @@ describe('StylelintResolver', () => {
 
 	test('should resolve valid custom Stylelint paths', async () => {
 		const connection = createMockConnection();
-		const stylelintResolver = new StylelintResolver(connection);
+		const stylelintResolver = new Ec0lintResolver(connection);
 		const result = await stylelintResolver.resolve(
-			{ stylelintPath: goodStylelintPath },
+			{ ec0lintPath: goodStylelintPath },
 			createMockTextDocument(),
 		);
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 		expect(connection.console.error).not.toHaveBeenCalled();
 		expect(connection.window.showErrorMessage).not.toHaveBeenCalled();
 		expect(connection.tracer.log).not.toHaveBeenCalled();
@@ -138,14 +138,14 @@ describe('StylelintResolver', () => {
 		mockCWD = __dirname;
 
 		const connection = createMockConnection();
-		const stylelintResolver = new StylelintResolver(connection);
+		const stylelintResolver = new Ec0lintResolver(connection);
 		const result = await stylelintResolver.resolve(
-			{ stylelintPath: './stylelint.js' },
+			{ ec0lintPath: './stylelint.js' },
 			createMockTextDocument(),
 		);
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 		expect(connection.console.error).not.toHaveBeenCalled();
 		expect(connection.window.showErrorMessage).not.toHaveBeenCalled();
 		expect(connection.tracer.log).not.toHaveBeenCalled();
@@ -156,14 +156,14 @@ describe('StylelintResolver', () => {
 		mockedPath.isAbsolute.mockReturnValueOnce(false);
 
 		const connection = createMockConnection();
-		const stylelintResolver = new StylelintResolver(connection);
+		const stylelintResolver = new Ec0lintResolver(connection);
 		const result = await stylelintResolver.resolve(
-			{ stylelintPath: goodStylelintPath },
+			{ ec0lintPath: goodStylelintPath },
 			createMockTextDocument(),
 		);
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 		expect(connection.console.error).not.toHaveBeenCalled();
 		expect(connection.window.showErrorMessage).not.toHaveBeenCalled();
 		expect(connection.tracer.log).not.toHaveBeenCalled();
@@ -172,9 +172,9 @@ describe('StylelintResolver', () => {
 	test('should resolve to undefined for custom Stylelint paths pointing to modules without a lint function', async () => {
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve(
-			{ stylelintPath: badStylelintPath },
+			{ ec0lintPath: badStylelintPath },
 			createMockTextDocument(),
 		);
 
@@ -188,13 +188,13 @@ describe('StylelintResolver', () => {
 	test('should throw on invalid custom Stylelint paths', async () => {
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 
 		mockCWD = mockedPath.join('.', 'cwd');
 		mockedPath.__mockPlatform('posix');
 
 		await expect(
-			stylelintResolver.resolve({ stylelintPath: './does-not-exist' }, createMockTextDocument()),
+			stylelintResolver.resolve({ ec0lintPath: './does-not-exist' }, createMockTextDocument()),
 		).rejects.toThrowErrorMatchingSnapshot();
 		expect(logger.error).toHaveBeenCalledTimes(1);
 		expect(connection.window.showErrorMessage).toHaveBeenCalledTimes(1);
@@ -205,11 +205,11 @@ describe('StylelintResolver', () => {
 		mockLocalFileResolution(goodStylelintPath);
 
 		const connection = createMockConnection();
-		const stylelintResolver = new StylelintResolver(connection);
+		const stylelintResolver = new Ec0lintResolver(connection);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument());
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 		expect(connection.console.error).not.toHaveBeenCalled();
 		expect(connection.window.showErrorMessage).not.toHaveBeenCalled();
 		expect(connection.tracer.log).toHaveBeenCalledTimes(1);
@@ -219,11 +219,11 @@ describe('StylelintResolver', () => {
 		mockLocalFileResolution(goodStylelintPath);
 
 		const connection = createMockConnection();
-		const stylelintResolver = new StylelintResolver(connection);
+		const stylelintResolver = new Ec0lintResolver(connection);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument(true));
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 		expect(connection.console.error).not.toHaveBeenCalled();
 		expect(connection.window.showErrorMessage).not.toHaveBeenCalled();
 		expect(connection.tracer.log).toHaveBeenCalledTimes(1);
@@ -233,14 +233,14 @@ describe('StylelintResolver', () => {
 		mockGlobalFileResolution('yarn', goodStylelintPath);
 
 		const connection = createMockConnection();
-		const stylelintResolver = new StylelintResolver(connection);
+		const stylelintResolver = new Ec0lintResolver(connection);
 		const result = await stylelintResolver.resolve(
 			{ packageManager: 'yarn' },
 			createMockTextDocument(),
 		);
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 		expect(connection.console.error).not.toHaveBeenCalled();
 		expect(connection.window.showErrorMessage).not.toHaveBeenCalled();
 		expect(connection.tracer.log).toHaveBeenCalledTimes(1);
@@ -250,14 +250,14 @@ describe('StylelintResolver', () => {
 		mockGlobalFileResolution('npm', goodStylelintPath);
 
 		const connection = createMockConnection();
-		const stylelintResolver = new StylelintResolver(connection);
+		const stylelintResolver = new Ec0lintResolver(connection);
 		const result = await stylelintResolver.resolve(
 			{ packageManager: 'npm' },
 			createMockTextDocument(),
 		);
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 		expect(connection.console.error).not.toHaveBeenCalled();
 		expect(connection.window.showErrorMessage).not.toHaveBeenCalled();
 		expect(connection.tracer.log).toHaveBeenCalledTimes(1);
@@ -267,14 +267,14 @@ describe('StylelintResolver', () => {
 		mockGlobalFileResolution('pnpm', goodStylelintPath);
 
 		const connection = createMockConnection();
-		const stylelintResolver = new StylelintResolver(connection);
+		const stylelintResolver = new Ec0lintResolver(connection);
 		const result = await stylelintResolver.resolve(
 			{ packageManager: 'pnpm' },
 			createMockTextDocument(),
 		);
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 		expect(connection.console.error).not.toHaveBeenCalled();
 		expect(connection.window.showErrorMessage).not.toHaveBeenCalled();
 		expect(connection.tracer.log).toHaveBeenCalledTimes(1);
@@ -285,7 +285,7 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument());
 
 		expect(result).toBeUndefined();
@@ -307,13 +307,13 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument());
 
 		expect(mockedPnP.setup).toHaveBeenCalledTimes(1);
 		expect(logger.debug).toHaveBeenCalledWith('Resolved Stylelint using PnP', { path: pnpPath });
 		expect(result?.resolvedPath).toBe(__dirname);
-		expect(result?.stylelint?.lint({})).toBe('from pnp');
+		expect(result?.ec0lint?.lint({})).toBe('from pnp');
 	});
 
 	test('should resolve workspace Stylelint modules using a PnP loader named .pnp.js (Yarn 2)', async () => {
@@ -336,13 +336,13 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument());
 
 		expect(mockedJSPnP.setup).toHaveBeenCalledTimes(1);
 		expect(logger.debug).toHaveBeenCalledWith('Resolved Stylelint using PnP', { path: pnpJSPath });
 		expect(result?.resolvedPath).toBe(__dirname);
-		expect(result?.stylelint?.lint({})).toBe('from pnp');
+		expect(result?.ec0lint?.lint({})).toBe('from pnp');
 	});
 
 	test('should not try to setup PnP if it is already setup', async () => {
@@ -359,7 +359,7 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 
 		await stylelintResolver.resolve({}, createMockTextDocument());
 
@@ -385,7 +385,7 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument());
 
 		expect(mockedPnP.setup).toHaveBeenCalledTimes(1);
@@ -407,7 +407,7 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument());
 
 		expect(mockedPnP.setup).not.toHaveBeenCalled();
@@ -431,7 +431,7 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument());
 
 		expect(mockedPnP.setup).not.toHaveBeenCalled();
@@ -465,7 +465,7 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument());
 
 		expect(mockedPnP.setup).toHaveBeenCalledTimes(1);
@@ -491,8 +491,8 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
-		const result = await stylelintResolver.resolve({}, createMockTextDocument());
+		const ec0lintStyleResolver = new Ec0lintResolver(connection, logger);
+		const result = await ec0lintStyleResolver.resolve({}, createMockTextDocument());
 
 		expect(mockedPnP.setup).toHaveBeenCalledTimes(1);
 		expect(logger.warn).toHaveBeenCalledWith('Failed to find the Stylelint package root', {
@@ -506,7 +506,7 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument(true));
 
 		expect(result).toBeUndefined();
@@ -517,7 +517,7 @@ describe('StylelintResolver', () => {
 
 		const connection = createMockConnection();
 		const logger = createMockLogger();
-		const stylelintResolver = new StylelintResolver(connection, logger);
+		const stylelintResolver = new Ec0lintResolver(connection, logger);
 		const result = await stylelintResolver.resolve({}, createMockTextDocument(true));
 
 		expect(result).toBeUndefined();
@@ -526,17 +526,17 @@ describe('StylelintResolver', () => {
 	test('should work without a connection', async () => {
 		mockGlobalFileResolution('npm', goodStylelintPath);
 
-		let result = await new StylelintResolver().resolve(
+		let result = await new Ec0lintResolver().resolve(
 			{ packageManager: 'npm' },
 			createMockTextDocument(),
 		);
 
 		expect(result?.resolvedPath).toBe(goodStylelintPath);
-		expect(result?.stylelint?.lint({})).toBe('good');
+		expect(result?.ec0lint?.lint({})).toBe('good');
 
 		mockGlobalFileResolution('npm', badStylelintPath);
 
-		result = await new StylelintResolver().resolve(
+		result = await new Ec0lintResolver().resolve(
 			{ packageManager: 'npm' },
 			createMockTextDocument(),
 		);
@@ -544,8 +544,8 @@ describe('StylelintResolver', () => {
 		expect(result).toBeUndefined();
 
 		await expect(
-			new StylelintResolver().resolve(
-				{ stylelintPath: './does-not-exist' },
+			new Ec0lintResolver().resolve(
+				{ ec0lintPath: './does-not-exist' },
 				createMockTextDocument(),
 			),
 		).rejects.toThrowErrorMatchingSnapshot();

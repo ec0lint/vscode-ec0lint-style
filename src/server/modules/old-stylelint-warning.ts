@@ -45,7 +45,7 @@ export class OldStylelintWarningModule implements LanguageServerModule {
 	}
 
 	async #getStylelintVersion(document: TextDocument): Promise<string | undefined> {
-		const result = await this.#context.resolveStylelint(document);
+		const result = await this.#context.resolveEc0lintStyle(document);
 
 		if (!result) {
 			this.#logger?.debug('Stylelint not found', {

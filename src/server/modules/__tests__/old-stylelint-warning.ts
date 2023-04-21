@@ -58,7 +58,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).not.toHaveBeenCalled();
+		expect(mockContext.resolveEc0lintStyle).not.toHaveBeenCalled();
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 		expect(mockLogger.debug).toHaveBeenLastCalledWith(
 			'Document should not be validated, ignoring',
@@ -85,7 +85,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).not.toHaveBeenCalled();
+		expect(mockContext.resolveEc0lintStyle).not.toHaveBeenCalled();
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 		expect(mockLogger.debug).toHaveBeenLastCalledWith(
 			'Document not part of a workspace, ignoring',
@@ -116,7 +116,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 		expect(mockLogger.debug).toHaveBeenLastCalledWith(
 			'Document has already been checked, ignoring',
@@ -127,9 +127,9 @@ describe('OldStylelintWarningModule', () => {
 	test('if Stylelint package root cannot be determined, should not warn', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue(undefined);
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
-			resolvedPath: '/path/node_modules/stylelint',
+			resolvedPath: '/path/node_modules/ec0lint-style',
 		});
 		mockContext.__options.validate = ['bar'];
 
@@ -148,7 +148,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 		expect(mockLogger.debug).toHaveBeenLastCalledWith('Stylelint package root not found', {
 			uri: 'foo',
@@ -160,7 +160,7 @@ describe('OldStylelintWarningModule', () => {
 
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -182,7 +182,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 		expect(mockLogger.debug).toHaveBeenLastCalledWith(
 			'Stylelint package manifest could not be read',
@@ -193,7 +193,7 @@ describe('OldStylelintWarningModule', () => {
 	test('if Stylelint package manifest is malformed, should not warn', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -215,7 +215,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 		expect(mockLogger.debug).toHaveBeenLastCalledWith(
 			'Stylelint package manifest could not be read',
@@ -230,7 +230,7 @@ describe('OldStylelintWarningModule', () => {
 	test('if Stylelint package manifest does not contain a version, should not warn', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -252,14 +252,14 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 	});
 
 	test('if Stylelint version cannot be parsed, should not warn', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -281,7 +281,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 		expect(mockLogger.debug).toHaveBeenLastCalledWith('Stylelint version could not be parsed', {
 			uri: 'foo',
@@ -293,7 +293,7 @@ describe('OldStylelintWarningModule', () => {
 	test('if Stylelint version is 14.x or greater, should not warn', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -315,14 +315,14 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 	});
 
 	test('if Stylelint version is 14.x with a label, should not warn', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -344,14 +344,14 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).not.toHaveBeenCalled();
 	});
 
 	test('without openDocument support, if Stylelint version is less than 14.x, should warn and provide link to migration guide', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -373,7 +373,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage.mock.calls[0]).toMatchSnapshot();
 		expect(mockContext.connection.window.showDocument).not.toHaveBeenCalled();
@@ -381,10 +381,10 @@ describe('OldStylelintWarningModule', () => {
 
 	test("with openDocument support, if Stylelint version is less than 14.x and user doesn't click button, should warn but not open URL", async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
-		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/ec0lint-style');
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
-			resolvedPath: '/path/node_modules/stylelint',
+			resolvedPath: '/path/node_modules/ec0lint-style',
 		});
 		mockContext.__options.validate = ['bar'];
 		mockContext.connection.window.showWarningMessage.mockResolvedValue(undefined);
@@ -411,7 +411,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showDocument).not.toHaveBeenCalled();
 	});
@@ -419,7 +419,7 @@ describe('OldStylelintWarningModule', () => {
 	test('with openDocument support, if Stylelint version is less than 14.x and user clicks button, should warn and open URL', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -453,7 +453,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showDocument).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showDocument.mock.calls[0]).toMatchSnapshot();
@@ -463,7 +463,7 @@ describe('OldStylelintWarningModule', () => {
 	test('with openDocument support, if Stylelint version is less than 14.x and user clicks button, but fails to open URL, should warn and log', async () => {
 		mockedGetWorkspaceFolder.mockResolvedValue('/path');
 		mockedFindPackageRoot.mockResolvedValue('/path/node_modules/stylelint');
-		mockContext.resolveStylelint.mockResolvedValue({
+		mockContext.resolveEc0lintStyle.mockResolvedValue({
 			stylelint: {},
 			resolvedPath: '/path/node_modules/stylelint',
 		});
@@ -497,7 +497,7 @@ describe('OldStylelintWarningModule', () => {
 			document: { uri: 'foo', languageId: 'bar' },
 		});
 
-		expect(mockContext.resolveStylelint).toHaveBeenCalledTimes(1);
+		expect(mockContext.resolveEc0lintStyle).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showWarningMessage).toHaveBeenCalledTimes(1);
 		expect(mockContext.connection.window.showDocument).toHaveBeenCalledTimes(1);
 		expect(mockLogger.warn).toHaveBeenCalledWith('Failed to open migration guide');

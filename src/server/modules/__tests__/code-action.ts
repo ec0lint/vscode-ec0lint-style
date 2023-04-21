@@ -92,7 +92,7 @@ describe('CodeActionModule', () => {
 		const handler = mockContext.connection.onCodeAction.mock.calls[0][0];
 
 		const result = await handler({
-			context: { only: [StylelintCodeActionKind.StylelintSourceFixAll] },
+			context: { only: [StylelintCodeActionKind.Ec0lintStyleSourceFixAll] },
 			textDocument: { uri: 'foo' },
 		});
 

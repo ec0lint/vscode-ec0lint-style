@@ -1,13 +1,13 @@
 import type { TextDocument } from 'vscode-languageserver-textdocument';
 import * as LSP from 'vscode-languageserver-protocol';
 import type winston from 'winston';
-import { CodeActionKind as StylelintCodeActionKind, CommandId, Notification } from '../types';
+import { CodeActionKind as Ec0lintStyleCodeActionKind, CommandId, Notification } from '../types';
 import {
 	RuleCodeActionsCollection,
 	createDisableRuleFileCodeAction,
 	createDisableRuleLineCodeAction,
 } from '../../utils/lsp';
-import { isDisableReportRule } from '../../utils/stylelint';
+import { isDisableReportRule } from '../../utils/ec0lint-style';
 import type {
 	LanguageServerContext,
 	LanguageServerModuleConstructorParameters,
@@ -45,7 +45,7 @@ export class CodeActionModule implements LanguageServerModule {
 				codeActionProvider: {
 					codeActionKinds: [
 						LSP.CodeActionKind.QuickFix,
-						StylelintCodeActionKind.StylelintSourceFixAll,
+						Ec0lintStyleCodeActionKind.Ec0lintStyleSourceFixAll,
 					],
 				},
 				executeCommandProvider: {
@@ -132,7 +132,7 @@ export class CodeActionModule implements LanguageServerModule {
 			? LSP.CodeAction.create(
 					'Fix all Stylelint auto-fixable problems',
 					{ documentChanges: [LSP.TextDocumentEdit.create(identifier, edits)] },
-					StylelintCodeActionKind.StylelintSourceFixAll,
+					Ec0lintStyleCodeActionKind.Ec0lintStyleSourceFixAll,
 			  )
 			: undefined;
 	}
@@ -181,7 +181,7 @@ export class CodeActionModule implements LanguageServerModule {
 		// actions for the whole document.
 		if (
 			only?.has(LSP.CodeActionKind.SourceFixAll) ||
-			only?.has(StylelintCodeActionKind.StylelintSourceFixAll)
+			only?.has(Ec0lintStyleCodeActionKind.Ec0lintStyleSourceFixAll)
 		) {
 			this.#logger?.debug('Creating "source-fix-all" code action');
 
