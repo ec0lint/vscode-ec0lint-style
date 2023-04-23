@@ -6,7 +6,7 @@ import type { TextDocument } from 'vscode-languageserver-textdocument';
 import type Ec0lintStyle from 'ec0lint-style';
 import type winston from 'winston';
 
-import { Ec0lintResolver as Ec0lintResolver } from '../packages';
+import { Ec0lintResolver   } from '../packages';
 import { getWorkspaceFolder } from '../documents';
 import { processLinterResult } from './process-linter-result';
 import { buildStylelintOptions } from './build-stylelint-options';

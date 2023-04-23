@@ -13,7 +13,7 @@ import { Connection, Files } from 'vscode-languageserver/node';
 import type { TextDocument } from 'vscode-languageserver-textdocument';
 import { GlobalPathResolver } from '../global-path-resolver';
 import { findPackageRoot } from '../find-package-root';
-import { Ec0lintResolver } from '../stylelint-resolver';
+import { Ec0lintResolver } from '../ec0lint-style-resolver';
 import type { Stats } from 'fs';
 import type { PackageManager } from '..';
 
