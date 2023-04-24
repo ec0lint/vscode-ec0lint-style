@@ -9,12 +9,12 @@ import type { PackageManager } from '../packages';
 export type LintDiagnostics = {
 	/**
 	 * The diagnostics, each corresponding to a warning or error emitted by
-	 * Stylelint.
+	 * ec0lint-style.
 	 */
 	diagnostics: LSP.Diagnostic[];
 
 	/**
-	 * Raw output from Stylelint, if any.
+	 * Raw output from ec0lint-style, if any.
 	 */
 	output?: string;
 };
@@ -30,7 +30,7 @@ export enum DisableReportRuleNames {
 }
 
 /**
- * Stylelint runner options.
+ * ec0lint-style runner options.
  */
 export type RunnerOptions = {
 	config?: Ec0lintStyle.Config | null;
@@ -43,7 +43,7 @@ export type RunnerOptions = {
 	reportInvalidScopeDisables?: boolean;
 	reportNeedlessDisables?: boolean;
 	snippet?: string[];
-	stylelintPath?: string;
+	ec0lintStylePath?: string;
 	validate?: string[];
 };
 

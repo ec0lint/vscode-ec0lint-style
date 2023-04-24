@@ -110,13 +110,13 @@ describe('Extension entry point', () => {
 		expect(stripPaths(mockLanguageClient.mock.calls[0])).toMatchSnapshot();
 	});
 
-	it('should watch for changes to Stylelint configuration files', () => {
+	it('should watch for changes to ec0lint-style configuration files', () => {
 		activate(mockExtensionContext);
 
 		expect(mockWorkspace.createFileSystemWatcher).toHaveBeenCalled();
 		expect(mockWorkspace.createFileSystemWatcher.mock.calls[0]).toMatchInlineSnapshot(`
 		Array [
-		  "**/{.stylelintrc{,.js,.json,.yaml,.yml},stylelint.config.js,.stylelintignore}",
+		  "**/{.ec0lint-stylerc{,.js,.json,.yaml,.yml}ec0lint-style.config.js,.ec0lint-styleignore}",
 		]
 	`);
 	});
@@ -134,7 +134,7 @@ describe('Extension entry point', () => {
 		// cspell:disable
 		expect(mockCommands.registerCommand.mock.calls[0]).toMatchInlineSnapshot(`
 		Array [
-		  "stylelint.executeAutofix",
+		  "ec0lint-style.executeAutofix",
 		  [Function],
 		]
 	`);
@@ -181,7 +181,7 @@ describe('Extension entry point', () => {
 		expect(mockWindow.showErrorMessage).toHaveBeenCalledTimes(1);
 		expect(mockWindow.showErrorMessage.mock.calls[0]).toMatchInlineSnapshot(`
 		Array [
-		  "Failed to apply Stylelint fixes to the document. Please consider opening an issue with steps to reproduce.",
+		  "Failed to apply ec0lint-style fixes to the document. Please consider opening an issue with steps to reproduce.",
 		]
 	`);
 	});
@@ -199,7 +199,7 @@ describe('Extension entry point', () => {
 
 		expect(mockSettingMonitor).toHaveBeenCalled();
 		expect(mockSettingMonitor.mock.calls[0][0]).toBe(mockLanguageClientInstance);
-		expect(mockSettingMonitor.mock.calls[0][1]).toBe('stylelint.enable');
+		expect(mockSettingMonitor.mock.calls[0][1]).toBe('ec0lint-style.enable');
 		expect(settingMonitorStart).toHaveBeenCalled();
 		expect(subscriptions).toContain(disposable);
 	});
@@ -292,12 +292,12 @@ describe('Extension entry point', () => {
 		expect(mockWindow.showErrorMessage).toHaveBeenCalledTimes(2);
 		expect(mockWindow.showErrorMessage.mock.calls[0]).toMatchInlineSnapshot(`
 		Array [
-		  "Stylelint: Problem!",
+		  "ec0lint-style: Problem!",
 		]
 	`);
 		expect(mockWindow.showErrorMessage.mock.calls[1]).toMatchInlineSnapshot(`
 		Array [
-		  "Stylelint: String problem!",
+		  "ec0lint-style: String problem!",
 		]
 	`);
 	});

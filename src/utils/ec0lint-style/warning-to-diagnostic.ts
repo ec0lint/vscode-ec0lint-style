@@ -3,11 +3,11 @@ import { Diagnostic, DiagnosticSeverity, Position, Range } from 'vscode-language
 import type Ec0lintStyle from 'ec0lint-style';
 
 /**
- * Converts a Stylelint warning to an LSP Diagnostic.
+ * Converts a ec0lint-style warning to an LSP Diagnostic.
  *
  * @example
  * ```js
- * const [result] = await stylelint.lint({
+ * const [result] = await ec0lint-style.lint({
  *   code: 'a { color: red; }',
  *   config: { rules: { 'color-named': 'never' } }
  * });
@@ -25,7 +25,7 @@ import type Ec0lintStyle from 'ec0lint-style';
  * // {
  * //   message: 'Unexpected named color "red" (color-named)',
  * //   severity: 1,
- * //   source: 'Stylelint',
+ * //   source: 'ec0lint-style',
  * //   range: {
  * //     start: {
  * //       line: 0,
@@ -39,7 +39,7 @@ import type Ec0lintStyle from 'ec0lint-style';
  * // }
  * ```
  * @param warning The warning to convert.
- * @param rules Available Stylelint rules.
+ * @param rules Available ec0lint-style rules.
  */
 export function warningToDiagnostic(
 	warning: Ec0lintStyle.Warning,
@@ -55,7 +55,7 @@ export function warningToDiagnostic(
 		warning.text,
 		DiagnosticSeverity[warning.severity === 'warning' ? 'Warning' : 'Error'],
 		warning.rule,
-		'Stylelint',
+		'ec0lint-style',
 	);
 
 	if (ruleDocUrl) {

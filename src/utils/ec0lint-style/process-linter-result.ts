@@ -4,19 +4,19 @@ import type Ec0lintStyle from 'ec0lint-style';
 import { LintDiagnostics, InvalidOptionError } from './types';
 
 /**
- * Processes the results of a Stylelint lint run.
+ * Processes the results of a ec0lint-style lint run.
  *
- * If Stylelint reported any warnings, they are converted to Diagnostics and
+ * If ec0lint-style reported any warnings, they are converted to Diagnostics and
  * returned. If the lint results contain raw output in the `output` property, it
  * is also returned.
  *
  * Throws an `InvalidOptionError` for any invalid option warnings reported by
- * Stylelint.
- * @param stylelint The Stylelint instance that was used.
- * @param result The results returned by Stylelint.
+ * ec0lint-style.
+ * @param ec0lintStyle The ec0lint-style instance that was used.
+ * @param result The results returned by ec0lint-style.
  */
 export function processLinterResult(
-	stylelint: Ec0lintStyle.PublicApi,
+	ec0lintStyle: Ec0lintStyle.PublicApi,
 	{ results, output }: Ec0lintStyle.LinterResult,
 ): LintDiagnostics {
 	if (results.length === 0) {
@@ -37,7 +37,7 @@ export function processLinterResult(
 			{},
 			{
 				get: (_, key: string) => {
-					return stylelint.rules?.[key]?.meta;
+					return ec0lintStyle.rules?.[key]?.meta;
 				},
 			},
 		);

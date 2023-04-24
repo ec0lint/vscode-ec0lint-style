@@ -44,7 +44,7 @@ Array [
         "version": 1,
       },
     ],
-    "command": "stylelint.applyAutoFix",
+    "command": "ec0lint-style.applyAutoFix",
   },
 ]
 `;

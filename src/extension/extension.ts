@@ -32,10 +32,10 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 		},
 		{
 			documentSelector: [{ scheme: 'file' }, { scheme: 'untitled' }],
-			diagnosticCollectionName: 'Ec0lintStyle',
+			diagnosticCollectionName: 'ec0lint-style',
 			synchronize: {
 				fileEvents: workspace.createFileSystemWatcher(
-					'**/{.stylelintrc{,.js,.json,.yaml,.yml},stylelint.config.js,.stylelintignore}',
+					'**/{.ec0lint-stylerc{,.js,.json,.yaml,.yml},ec0lint-style.config.js,.ec0lint-styleignore}',
 				),
 			},
 		},
@@ -59,13 +59,13 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 		})
 		.catch(async (error) => {
 			await window.showErrorMessage(
-				`Ec0lintStyle: ${error instanceof Error ? error.message : String(error)}`,
+				`ec0lint-style: ${error instanceof Error ? error.message : String(error)}`,
 			);
 		});
 
 	subscriptions.push(
 		// cspell:disable-next-line
-		commands.registerCommand('stylelint.executeAutofix', async () => {
+		commands.registerCommand('ec0lint-style.executeAutofix', async () => {
 			const textEditor = window.activeTextEditor;
 
 			if (!textEditor) {
@@ -89,7 +89,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 		}),
 	);
 
-	subscriptions.push(new SettingMonitor(client, 'stylelint.enable').start());
+	subscriptions.push(new SettingMonitor(client, 'ec0lint-style.enable').start());
 
 	return api;
 }

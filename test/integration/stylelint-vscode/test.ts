@@ -566,7 +566,7 @@ describe('StylelintRunner with stylelintPath', () => {
 				config: { rules: { indentation: [2] } },
 			},
 			{
-				stylelintPath: resolve(__dirname, '../../../node_modules/ec0lint-style'),
+				ec0lintStylePath: resolve(__dirname, '../../../node_modules/ec0lint-style'),
 			},
 		);
 
@@ -582,7 +582,7 @@ describe('StylelintRunner with stylelintPath', () => {
 				config: { rules: { indentation: [2] } },
 			},
 			{
-				stylelintPath: require.resolve('./fake-stylelint'),
+				ec0lintStylePath: require.resolve('./fake-stylelint'),
 			},
 		);
 

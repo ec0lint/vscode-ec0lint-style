@@ -27,7 +27,7 @@ const transports: winston.transport[] = [
 if (level === 'debug') {
 	transports.push(
 		new winston.transports.File({
-			filename: path.join(__dirname, '../stylelint-language-server.log'),
+			filename: path.join(__dirname, '../ec0lint-style-language-server.log'),
 			level,
 			format: winston.format.combine(
 				new ErrorFormatter(),

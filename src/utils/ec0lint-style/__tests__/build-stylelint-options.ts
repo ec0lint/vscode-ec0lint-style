@@ -10,7 +10,7 @@ import path from 'path';
 import type Ec0lintStyle from 'ec0lint-style';
 import type { RunnerOptions } from '../types';
 import * as packages from '../../packages';
-import { buildStylelintOptions } from '../build-stylelint-options';
+import { buildEc0lintStyleOptions } from '../build-ec0lint-style-options';
 
 const mockedPath = path as tests.mocks.PathModule;
 const mockedPackages = packages as jest.Mocked<typeof packages>;
@@ -23,19 +23,19 @@ describe('buildStylelintOptions', () => {
 	});
 
 	test('with no options, should only set ignore path', async () => {
-		const result = await buildStylelintOptions('/path/to/file.css', '/path');
+		const result = await buildEc0lintStyleOptions('/path/to/file.css', '/path');
 
 		expect(result).toEqual({ ignorePath: '/path/.stylelintignore' });
 	});
 
 	test('should only override ignore path if document is in workspace', async () => {
-		const result1 = await buildStylelintOptions('/path/to/file.css', '/path', {
+		const result1 = await buildEc0lintStyleOptions('/path/to/file.css', '/path', {
 			ignorePath: './stylelintignore',
 		});
 
 		expect(result1).toEqual({ ignorePath: '/path/.stylelintignore' });
 
-		const result2 = await buildStylelintOptions('/path/to/file.css', '/workspace', {
+		const result2 = await buildEc0lintStyleOptions('/path/to/file.css', '/workspace', {
 			ignorePath: './stylelintignore',
 		});
 
@@ -45,7 +45,7 @@ describe('buildStylelintOptions', () => {
 	test('with no ignore path or workspace folder, should set ignore path to package root', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/path');
 
-		const result = await buildStylelintOptions('/path/to/file.css');
+		const result = await buildEc0lintStyleOptions('/path/to/file.css');
 
 		expect(result).toEqual({ ignorePath: '/path/.stylelintignore' });
 	});
@@ -53,7 +53,7 @@ describe('buildStylelintOptions', () => {
 	test('with no ignore path, when document is not in workspace, should set ignore path to package root', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/path');
 
-		const result = await buildStylelintOptions('/path/to/file.css', '/workspace');
+		const result = await buildEc0lintStyleOptions('/path/to/file.css', '/workspace');
 
 		expect(result).toEqual({ ignorePath: '/path/.stylelintignore' });
 	});
@@ -61,7 +61,7 @@ describe('buildStylelintOptions', () => {
 	test('with no ignore path, package root, or workspace, should set ignore path to URI root', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce(undefined);
 
-		const result = await buildStylelintOptions('/path/to/file.css');
+		const result = await buildEc0lintStyleOptions('/path/to/file.css');
 
 		expect(result).toEqual({ ignorePath: '/.stylelintignore' });
 	});
@@ -69,7 +69,7 @@ describe('buildStylelintOptions', () => {
 	test('with no options or document FS path, should not set any options', async () => {
 		mockedPackages.findPackageRoot.mockResolvedValueOnce('/path');
 
-		const result = await buildStylelintOptions('', '/workspace');
+		const result = await buildEc0lintStyleOptions('', '/workspace');
 
 		expect(result).toEqual({});
 	});
@@ -89,7 +89,7 @@ describe('buildStylelintOptions', () => {
 			reportInvalidScopeDisables: false,
 		};
 
-		const result = await buildStylelintOptions('/path/to/file.css', '/path', options);
+		const result = await buildEc0lintStyleOptions('/path/to/file.css', '/path', options);
 
 		expect(result).toEqual({ ...options, ignorePath: '/path/.stylelintignore' });
 	});
@@ -120,7 +120,7 @@ describe('buildStylelintOptions', () => {
 			reportInvalidScopeDisables: false,
 		};
 
-		const result = await buildStylelintOptions(
+		const result = await buildEc0lintStyleOptions(
 			'/workspace/file.css',
 			'/path',
 			options,
@@ -159,7 +159,7 @@ describe('buildStylelintOptions', () => {
 			reportInvalidScopeDisables: false,
 		};
 
-		const result = await buildStylelintOptions(
+		const result = await buildEc0lintStyleOptions(
 			'/workspace/file.css',
 			'/workspace',
 			options,
@@ -202,7 +202,7 @@ describe('buildStylelintOptions', () => {
 			reportInvalidScopeDisables: false,
 		};
 
-		const result = await buildStylelintOptions(
+		const result = await buildEc0lintStyleOptions(
 			'/workspace/file.css',
 			undefined,
 			options,
@@ -243,7 +243,7 @@ describe('buildStylelintOptions', () => {
 			reportInvalidScopeDisables: false,
 		};
 
-		const result = await buildStylelintOptions(
+		const result = await buildEc0lintStyleOptions(
 			'/workspace/file.css',
 			'/workspace',
 			options,
@@ -284,7 +284,7 @@ describe('buildStylelintOptions', () => {
 			reportInvalidScopeDisables: false,
 		};
 
-		const result = await buildStylelintOptions(
+		const result = await buildEc0lintStyleOptions(
 			'/workspace/file.css',
 			undefined,
 			options,

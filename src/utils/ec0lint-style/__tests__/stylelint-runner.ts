@@ -16,7 +16,7 @@ import type { Connection } from 'vscode-languageserver';
 import type { TextDocument } from 'vscode-languageserver-textdocument';
 import { Ec0lintResolver, ResolverOptions } from '../../packages';
 import { getWorkspaceFolder } from '../../documents';
-import { Ec0lintRunner as Ec0lintStyleRunner } from '../stylelint-runner';
+import { Ec0lintRunner as Ec0lintStyleRunner } from '../ec0lint-style-runner';
 
 const mockedOS = os as tests.mocks.OSModule;
 const mockedPath = path as tests.mocks.PathModule;
@@ -201,7 +201,7 @@ describe('StylelintRunner', () => {
 		await new Ec0lintStyleRunner(mockConnection).lintDocument(
 			createMockDocument('a {}', '/path/to/file.css'),
 			undefined,
-			{ stylelintPath: '/path/to/ec0lint-style' },
+			{ ec0lintStylePath: '/path/to/ec0lint-style' },
 		);
 	});
 

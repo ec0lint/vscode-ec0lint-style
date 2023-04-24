@@ -15,24 +15,24 @@ import type { NotificationManager, CommandManager } from '../utils/lsp';
  * Command IDs
  */
 export enum CommandId {
-	ApplyAutoFix = 'stylelint.applyAutoFix',
-	OpenRuleDoc = 'stylelint.openRuleDoc',
+	ApplyAutoFix = 'ec0lint-style.applyAutoFix',
+	OpenRuleDoc = 'ec0lint-style.openRuleDoc',
 }
 
 /**
  * Code action kinds
  */
 export const CodeActionKind = {
-	Ec0lintStyleSourceFixAll: `${VSCodeActionKind.SourceFixAll}.stylelint`,
+	Ec0lintStyleSourceFixAll: `${VSCodeActionKind.SourceFixAll}.ec0lint-style`,
 };
 
 /**
  * Language server notification names.
  */
 export enum Notification {
-	DidRegisterCodeActionRequestHandler = 'stylelint/didRegisterCodeActionRequestHandler',
+	DidRegisterCodeActionRequestHandler = 'ec0lint-style/didRegisterCodeActionRequestHandler',
 	DidRegisterDocumentFormattingEditProvider = 'textDocument/didRegisterDocumentFormattingEditProvider',
-	DidResetConfiguration = 'stylelint/didResetConfiguration',
+	DidResetConfiguration = 'ec0lint-style/didResetConfiguration',
 }
 
 /**

@@ -210,7 +210,7 @@ export class Ec0lintStyleLanguageServer {
 
 		const options = (await this.#connection.workspace.getConfiguration({
 			scopeUri: resource,
-			section: 'stylelint',
+			section: 'ec0lint-style',
 		})) as unknown;
 
 		this.#logger?.debug('Received options from client', { resource, options });
@@ -414,7 +414,7 @@ export class Ec0lintStyleLanguageServer {
 			this.#logger?.debug('Registering DidChangeConfigurationNotification');
 
 			await this.#connection.client.register(DidChangeConfigurationNotification.type, {
-				section: 'stylelint',
+				section: 'ec0lint-style',
 			});
 		}
 	}
@@ -443,7 +443,7 @@ export class Ec0lintStyleLanguageServer {
 		this.#logger?.debug('received onDidChangeConfiguration', { params });
 
 		this.#globalOptions = mergeOptionsWithDefaults(
-			(params.settings as { stylelint: unknown }).stylelint,
+			(params.settings as { ec0lintStyle: unknown }).ec0lintStyle,
 			defaultOptions,
 		);
 

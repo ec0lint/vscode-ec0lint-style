@@ -17,7 +17,7 @@ import { getFirstResolvedValue, lazyCallAsync } from '../functions';
 import type { PackageManager, Ec0lintStyleResolutionResult, ResolverOptions, TracerFn } from './types';
 
 /**
- * Utility for resolving the path to the Stylelint package. Each instance caches
+ * Utility for resolving the path to the ec0lint-style package. Each instance caches
  * resolved paths to global `node_modules` directories.
  */
 export class Ec0lintResolver {
@@ -176,7 +176,7 @@ export class Ec0lintResolver {
 
 			return result;
 		} catch (error) {
-			this.#logger?.warn('Could not load Stylelint from node_modules', { error });
+			this.#logger?.warn('Could not load ec0lint-style from node_modules', { error });
 
 			return undefined;
 		}

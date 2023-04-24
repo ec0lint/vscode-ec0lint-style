@@ -9,7 +9,7 @@ import type winston from 'winston';
 import { Ec0lintResolver   } from '../packages';
 import { getWorkspaceFolder } from '../documents';
 import { processLinterResult } from './process-linter-result';
-import { buildStylelintOptions } from './build-stylelint-options';
+import { buildEc0lintStyleOptions } from './build-ec0lint-style-options';
 import type { LintDiagnostics, RunnerOptions } from './types';
 
 /**
@@ -67,7 +67,7 @@ export class Ec0lintRunner {
 
 		const { fsPath } = URI.parse(document.uri);
 
-		// Workaround for Stylelint treating paths as case-sensitive on Windows
+		// Workaround for ec0lint-style treating paths as case-sensitive on Windows
 		// If the drive letter is lowercase, we need to convert it to uppercase
 		// See https://github.com/stylelint/stylelint/issues/5594
 		// TODO: Remove once fixed upstream
@@ -77,7 +77,7 @@ export class Ec0lintRunner {
 				: fsPath;
 
 		const options: Ec0lintStyle.LinterOptions = {
-			...(await buildStylelintOptions(document.uri, workspaceFolder, linterOptions, runnerOptions)),
+			...(await buildEc0lintStyleOptions(document.uri, workspaceFolder, linterOptions, runnerOptions)),
 			code: document.getText(),
 			formatter: () => '',
 		};
@@ -100,7 +100,7 @@ export class Ec0lintRunner {
 				(err.message.startsWith('No configuration provided for') ||
 					err.message.includes('No rules found within configuration'))
 			) {
-				// Check only CSS syntax errors without applying any Stylelint rules
+				// Check only CSS syntax errors without applying any ec0lint-style rules
 				return processLinterResult(
 					ec0lint,
 					await ec0lint.lint({ ...options, config: { rules: {} } }),

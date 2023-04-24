@@ -22,7 +22,7 @@ export function createDisableRuleFileCodeAction(
 		.add(
 			LSP.TextEdit.insert(
 				LSP.Position.create(shebang === '#!' ? 1 : 0, 0),
-				`/* stylelint-disable ${code} */${os.EOL}`,
+				`/* ec0lint-style-disable ${code} */${os.EOL}`,
 			),
 		);
 
