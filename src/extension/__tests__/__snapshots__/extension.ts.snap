@@ -33,18 +33,3 @@ Array [
   },
 ]
 `;
-
-exports[`Extension entry point with an active text editor, should send auto-fix commands to the language server 1`] = `
-Array [
-  "executeCommand",
-  Object {
-    "arguments": Array [
-      Object {
-        "uri": "file:///path/to/file.ts",
-        "version": 1,
-      },
-    ],
-    "command": "ec0lint-style.applyAutoFix",
-  },
-]
-`;

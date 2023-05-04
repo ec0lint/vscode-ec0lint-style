@@ -15,16 +15,8 @@ import type { NotificationManager, CommandManager } from '../utils/lsp';
  * Command IDs
  */
 export enum CommandId {
-	ApplyAutoFix = 'ec0lint-style.applyAutoFix',
 	OpenRuleDoc = 'ec0lint-style.openRuleDoc',
 }
-
-/**
- * Code action kinds
- */
-export const CodeActionKind = {
-	Ec0lintStyleSourceFixAll: `${VSCodeActionKind.SourceFixAll}.ec0lint-style`,
-};
 
 /**
  * Language server notification names.

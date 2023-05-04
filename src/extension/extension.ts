@@ -63,32 +63,6 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 			);
 		});
 
-	subscriptions.push(
-		// cspell:disable-next-line
-		commands.registerCommand('ec0lint-style.executeAutofix', async () => {
-			const textEditor = window.activeTextEditor;
-
-			if (!textEditor) {
-				return;
-			}
-
-			const textDocument = {
-				uri: textEditor.document.uri.toString(),
-				version: textEditor.document.version,
-			};
-			const params = {
-				command: CommandId.ApplyAutoFix,
-				arguments: [textDocument],
-			};
-
-			await client.sendRequest(ExecuteCommandRequest.type, params).then(undefined, async () => {
-				await window.showErrorMessage(
-					'Failed to apply ec0lint-style fixes to the document. Please consider opening an issue with steps to reproduce.',
-				);
-			});
-		}),
-	);
-
 	subscriptions.push(new SettingMonitor(client, 'ec0lint-style.enable').start());
 
 	return api;

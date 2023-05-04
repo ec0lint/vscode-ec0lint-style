@@ -11,7 +11,7 @@
     "url": ""
   },
   "homepage": "https://ec0lint.com/",
-  "bugs": "https://github.com/Microsoft/vscode-eslint/issues",
+  "bugs": "https://github.com/ec0lint/ec0lint",
   "icon": "media/ec0lint.png",
   "engines": {
     "vscode": ">=1.56.0",
@@ -169,13 +169,7 @@
         }
       }
     },
-    "commands": [
-      {
-        "title": "Fix all auto-fixable Problems",
-        "category": "ec0lint-style",
-        "command": "ec0lint-style.executeAutofix"
-      }
-    ],
+    "commands": [],
     "jsonValidation": [
       {
         "fileMatch": "**/.stylelintrc*",

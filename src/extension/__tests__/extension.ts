@@ -116,7 +116,7 @@ describe('Extension entry point', () => {
 		expect(mockWorkspace.createFileSystemWatcher).toHaveBeenCalled();
 		expect(mockWorkspace.createFileSystemWatcher.mock.calls[0]).toMatchInlineSnapshot(`
 		Array [
-		  "**/{.ec0lint-stylerc{,.js,.json,.yaml,.yml}ec0lint-style.config.js,.ec0lint-styleignore}",
+		  "**/{.ec0lint-stylerc{,.js,.json,.yaml,.yml},ec0lint-style.config.js,.ec0lint-styleignore}",
 		]
 	`);
 	});
@@ -131,13 +131,7 @@ describe('Extension entry point', () => {
 		const { subscriptions } = mockExtensionContext;
 
 		expect(mockCommands.registerCommand).toHaveBeenCalled();
-		// cspell:disable
-		expect(mockCommands.registerCommand.mock.calls[0]).toMatchInlineSnapshot(`
-		Array [
-		  "ec0lint-style.executeAutofix",
-		  [Function],
-		]
-	`);
+
 		// cspell:enable
 		expect(subscriptions).toContain(disposable);
 	});
