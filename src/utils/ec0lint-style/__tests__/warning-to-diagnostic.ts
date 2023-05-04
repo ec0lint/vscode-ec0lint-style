@@ -1,6 +1,6 @@
-import { lint } from 'stylelint';
+import { lint } from 'ec0lint-style';
 import { warningToDiagnostic } from '../warning-to-diagnostic';
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 
 describe('warningToDiagnostic', () => {
 	test('should convert a Stylelint warning to an LSP diagnostic', async () => {
@@ -43,7 +43,7 @@ describe('warningToDiagnostic', () => {
 		const rules = {
 			'color-hex-case': { url: 'https://stylelint.io/rules/color-hex-case' },
 		} as {
-			[name: string]: Partial<stylelint.RuleMeta>;
+			[name: string]: Partial<Ec0lintStyle.RuleMeta>;
 		};
 
 		expect(warningToDiagnostic(warnings[0], rules)).toMatchSnapshot();

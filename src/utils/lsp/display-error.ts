@@ -1,8 +1,8 @@
 import { isIterableObject } from '../iterables';
 import type { Connection } from 'vscode-languageserver';
-import type { InvalidOptionError } from '../stylelint';
+import type { InvalidOptionError } from '../ec0lint-style';
 // eslint-disable-next-line node/no-unpublished-import
-import { ConfigurationError } from 'stylelint';
+import { ConfigurationError } from 'ec0lint-style';
 
 /**
  * Takes an error and displays it in the UI using the given connection.
@@ -18,14 +18,14 @@ export function displayError(connection: Connection, err: unknown): void {
 
 	if (isIterableObject((err as InvalidOptionError)?.reasons)) {
 		for (const reason of (err as InvalidOptionError).reasons) {
-			connection.window.showErrorMessage(`Stylelint: ${reason}`);
+			connection.window.showErrorMessage(`Ec0lint: ${reason}`);
 		}
 
 		return;
 	}
 
 	if ((err as ConfigurationError)?.code === 78) {
-		connection.window.showErrorMessage(`Stylelint: ${err.message}`);
+		connection.window.showErrorMessage(`Ec0lint: ${err.message}`);
 
 		return;
 	}

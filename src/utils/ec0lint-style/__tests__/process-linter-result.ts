@@ -1,4 +1,4 @@
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import { processLinterResult } from '../process-linter-result';
 
 const mockStylelint = {
@@ -6,28 +6,28 @@ const mockStylelint = {
 		'unit-no-unknown': {},
 		'at-rule-no-unknown': {},
 	},
-} as unknown as stylelint.PublicApi;
+} as unknown as Ec0lintStyle.PublicApi;
 
 const createMockResult = (
-	mockResults: Partial<stylelint.LintResult>[],
+	mockResults: Partial<Ec0lintStyle.LintResult>[],
 	output?: string,
-): stylelint.LinterResult => {
+): Ec0lintStyle.LinterResult => {
 	const results = mockResults.map((result) => ({
 		invalidOptionWarnings: result.invalidOptionWarnings ?? [],
 		warnings: result.warnings ?? [],
 		ignored: result.ignored ?? false,
 	}));
 
-	return (output ? { results, output } : { results }) as stylelint.LinterResult;
+	return (output ? { results, output } : { results }) as Ec0lintStyle.LinterResult;
 };
 
 const createMockWarning = (
 	rule: string,
 	text?: string,
-	severity?: stylelint.Severity,
+	severity?: Ec0lintStyle.Severity,
 	line?: number,
 	column?: number,
-): stylelint.Warning => ({
+): Ec0lintStyle.Warning => ({
 	rule,
 	text: text ?? rule,
 	severity: severity ?? 'error',

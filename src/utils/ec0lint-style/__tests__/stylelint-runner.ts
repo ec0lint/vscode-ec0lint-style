@@ -10,36 +10,36 @@ jest.mock('../../documents');
 
 import os from 'os';
 import path from 'path';
-import stylelint from 'stylelint';
+import ec0lint from 'ec0lint-style';
 import type winston from 'winston';
 import type { Connection } from 'vscode-languageserver';
 import type { TextDocument } from 'vscode-languageserver-textdocument';
-import { StylelintResolver, ResolverOptions } from '../../packages';
+import { Ec0lintResolver, ResolverOptions } from '../../packages';
 import { getWorkspaceFolder } from '../../documents';
-import { StylelintRunner } from '../stylelint-runner';
+import { Ec0lintRunner as Ec0lintStyleRunner } from '../ec0lint-style-runner';
 
 const mockedOS = os as tests.mocks.OSModule;
 const mockedPath = path as tests.mocks.PathModule;
-const mockedResolver = StylelintResolver as jest.Mock<StylelintResolver>;
+const mockedResolver = Ec0lintResolver as jest.Mock<Ec0lintResolver>;
 const mockedGetWorkspaceFolder = getWorkspaceFolder as jest.MockedFunction<
 	typeof getWorkspaceFolder
 >;
 
 type FakeLintFunction = (
-	options: stylelint.LinterOptions,
-) => Promise<Partial<stylelint.LinterResult>>;
+	options: ec0lint.LinterOptions,
+) => Promise<Partial<ec0lint.LinterResult>>;
 
 type FakeResolveFunction = (
 	serverOptions: ResolverOptions,
 	document: TextDocument,
-) => Promise<{ stylelint: { lint: FakeLintFunction } }>;
+) => Promise<{ ec0lint: { lint: FakeLintFunction } }>;
 
 const createMockResolver =
-	(lint?: FakeLintFunction, resolve?: FakeResolveFunction): (() => StylelintResolver) =>
+	(lint?: FakeLintFunction, resolve?: FakeResolveFunction): (() => Ec0lintResolver) =>
 	() =>
 		({
-			resolve: resolve ?? (async () => (lint ? { stylelint: { lint } } : undefined)),
-		} as unknown as StylelintResolver);
+			resolve: resolve ?? (async () => (lint ? { ec0lint: { lint } } : undefined)),
+		} as unknown as Ec0lintResolver);
 
 const createMockDocument = (code: string, uri = '/path/to/file.css'): TextDocument =>
 	({
@@ -58,7 +58,7 @@ describe('StylelintRunner', () => {
 	test('should return no diagnostics if Stylelint cannot be resolved', async () => {
 		mockedResolver.mockImplementation(createMockResolver());
 
-		const results = await new StylelintRunner(mockConnection).lintDocument(createMockDocument(''));
+		const results = await new Ec0lintStyleRunner(mockConnection).lintDocument(createMockDocument(''));
 
 		expect(results).toEqual({ diagnostics: [] });
 	});
@@ -76,7 +76,7 @@ describe('StylelintRunner', () => {
 			}),
 		);
 
-		await new StylelintRunner(mockConnection).lintDocument(
+		await new Ec0lintStyleRunner(mockConnection).lintDocument(
 			createMockDocument('', 'c:\\path\\to\\file.css'),
 		);
 
@@ -89,25 +89,25 @@ describe('StylelintRunner', () => {
 			}),
 		);
 
-		await new StylelintRunner(mockConnection).lintDocument(
+		await new Ec0lintStyleRunner(mockConnection).lintDocument(
 			createMockDocument('', 'c:/path/to/file.css'),
 		);
 	});
 
-	test('should call stylelint.lint with the document path and given options', async () => {
+	test('should call ec0lint.lint with the document path and given options', async () => {
 		expect.assertions(2);
 
 		mockedResolver.mockImplementation(
 			createMockResolver(async (options) => {
 				expect(options).toMatchSnapshot();
 
-				expect((options.formatter as stylelint.Formatter)?.([], {} as never)).toBe('');
+				expect((options.formatter as ec0lint.Formatter)?.([], {} as never)).toBe('');
 
 				return { results: [] };
 			}),
 		);
 
-		await new StylelintRunner(mockConnection).lintDocument(
+		await new Ec0lintStyleRunner(mockConnection).lintDocument(
 			createMockDocument('a {}', '/path/to/file.scss'),
 			{
 				config: {
@@ -131,7 +131,7 @@ describe('StylelintRunner', () => {
 			}),
 		);
 
-		await new StylelintRunner(mockConnection).lintDocument(createMockDocument('a {}', ''));
+		await new Ec0lintStyleRunner(mockConnection).lintDocument(createMockDocument('a {}', ''));
 	});
 
 	test("should not change set rules if the document's path cannot be determined", async () => {
@@ -147,7 +147,7 @@ describe('StylelintRunner', () => {
 			}),
 		);
 
-		await new StylelintRunner(mockConnection).lintDocument(createMockDocument('a {}', ''), {
+		await new Ec0lintStyleRunner(mockConnection).lintDocument(createMockDocument('a {}', ''), {
 			config: { rules: { 'no-empty-source': true } },
 		});
 	});
@@ -169,12 +169,12 @@ describe('StylelintRunner', () => {
 				expect(document.getText()).toBe('a {}');
 
 				return {
-					stylelint: { lint: async () => ({ results: [] }) },
+					ec0lint: { lint: async () => ({ results: [] }) },
 				};
 			}),
 		);
 
-		await new StylelintRunner(mockConnection).lintDocument(
+		await new Ec0lintStyleRunner(mockConnection).lintDocument(
 			createMockDocument('a {}', '/path/to/file.css'),
 			undefined,
 			{ packageManager: 'pnpm' },
@@ -189,19 +189,19 @@ describe('StylelintRunner', () => {
 		mockedResolver.mockImplementation(
 			createMockResolver(undefined, async (serverOptions) => {
 				expect(serverOptions).toEqual({
-					stylelintPath: '/path/to/stylelint',
+					stylelintPath: '/path/to/ec0lint-style',
 				});
 
 				return {
-					stylelint: { lint: async () => ({ results: [] }) },
+					ec0lint: { lint: async () => ({ results: [] }) },
 				};
 			}),
 		);
 
-		await new StylelintRunner(mockConnection).lintDocument(
+		await new Ec0lintStyleRunner(mockConnection).lintDocument(
 			createMockDocument('a {}', '/path/to/file.css'),
 			undefined,
-			{ stylelintPath: '/path/to/stylelint' },
+			{ ec0lintStylePath: '/path/to/ec0lint-style' },
 		);
 	});
 
@@ -210,9 +210,9 @@ describe('StylelintRunner', () => {
 
 		mockedPath.__mockPlatform();
 
-		mockedResolver.mockImplementation(createMockResolver(undefined, async () => ({ stylelint })));
+		mockedResolver.mockImplementation(createMockResolver(undefined, async () => ({ ec0lint })));
 
-		const results = await new StylelintRunner(mockConnection).lintDocument(
+		const results = await new Ec0lintStyleRunner(mockConnection).lintDocument(
 			createMockDocument('table {', '/path/to/file.css'),
 		);
 
@@ -224,9 +224,9 @@ describe('StylelintRunner', () => {
 
 		mockedPath.__mockPlatform();
 
-		mockedResolver.mockImplementation(createMockResolver(undefined, async () => ({ stylelint })));
+		mockedResolver.mockImplementation(createMockResolver(undefined, async () => ({ ec0lint })));
 
-		const results = await new StylelintRunner(mockConnection).lintDocument(
+		const results = await new Ec0lintStyleRunner(mockConnection).lintDocument(
 			createMockDocument('a {}', '/path/to/file.css'),
 			{ config: { rules: { 'block-no-empty': true } } },
 		);
@@ -239,10 +239,10 @@ describe('StylelintRunner', () => {
 
 		mockedPath.__mockPlatform();
 
-		mockedResolver.mockImplementation(createMockResolver(undefined, async () => ({ stylelint })));
+		mockedResolver.mockImplementation(createMockResolver(undefined, async () => ({ ec0lint })));
 
 		await expect(
-			new StylelintRunner(mockConnection).lintDocument(
+			new Ec0lintStyleRunner(mockConnection).lintDocument(
 				createMockDocument('a {}', '/path/to/file.css'),
 				{
 					config: { rules: {} },
@@ -265,9 +265,9 @@ describe('StylelintRunner', () => {
 
 		mockedPath.__mockPlatform();
 
-		mockedResolver.mockImplementation(createMockResolver(undefined, async () => ({ stylelint })));
+		mockedResolver.mockImplementation(createMockResolver(undefined, async () => ({ ec0lint })));
 
-		await new StylelintRunner(mockConnection, mockLogger).lintDocument(
+		await new Ec0lintStyleRunner(mockConnection, mockLogger).lintDocument(
 			createMockDocument('a {}', '/path/to/file.css'),
 			{ config: { rules: { 'block-no-empty': true } } },
 		);

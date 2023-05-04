@@ -1,5 +1,6 @@
 /* prettier-ignore */
 a {
+  @font-face { font-family: 'foo'; src: url('/path/to/foo.ttf') }; 
   color: red;
 }
 

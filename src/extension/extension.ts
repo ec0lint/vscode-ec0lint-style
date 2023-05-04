@@ -18,7 +18,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 	const api: PublicApi = Object.assign(new EventEmitter(), { codeActionReady: false });
 
 	const client = new LanguageClient(
-		'Stylelint',
+		'Ec0lintStyle',
 		{
 			run: {
 				module: serverPath,
@@ -32,10 +32,10 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 		},
 		{
 			documentSelector: [{ scheme: 'file' }, { scheme: 'untitled' }],
-			diagnosticCollectionName: 'Stylelint',
+			diagnosticCollectionName: 'ec0lint-style',
 			synchronize: {
 				fileEvents: workspace.createFileSystemWatcher(
-					'**/{.stylelintrc{,.js,.json,.yaml,.yml},stylelint.config.js,.stylelintignore}',
+					'**/{.ec0lint-stylerc{,.js,.json,.yaml,.yml},ec0lint-style.config.js,.ec0lint-styleignore}',
 				),
 			},
 		},
@@ -59,37 +59,11 @@ export function activate({ subscriptions }: vscode.ExtensionContext): PublicApi 
 		})
 		.catch(async (error) => {
 			await window.showErrorMessage(
-				`Stylelint: ${error instanceof Error ? error.message : String(error)}`,
+				`ec0lint-style: ${error instanceof Error ? error.message : String(error)}`,
 			);
 		});
 
-	subscriptions.push(
-		// cspell:disable-next-line
-		commands.registerCommand('stylelint.executeAutofix', async () => {
-			const textEditor = window.activeTextEditor;
-
-			if (!textEditor) {
-				return;
-			}
-
-			const textDocument = {
-				uri: textEditor.document.uri.toString(),
-				version: textEditor.document.version,
-			};
-			const params = {
-				command: CommandId.ApplyAutoFix,
-				arguments: [textDocument],
-			};
-
-			await client.sendRequest(ExecuteCommandRequest.type, params).then(undefined, async () => {
-				await window.showErrorMessage(
-					'Failed to apply Stylelint fixes to the document. Please consider opening an issue with steps to reproduce.',
-				);
-			});
-		}),
-	);
-
-	subscriptions.push(new SettingMonitor(client, 'stylelint.enable').start());
+	subscriptions.push(new SettingMonitor(client, 'ec0lint-style.enable').start());
 
 	return api;
 }
