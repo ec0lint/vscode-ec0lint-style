@@ -5,7 +5,7 @@ jest.mock('vscode-uri', () => ({
 		parse: jest.fn((str: string) => ({ fsPath: str })),
 	},
 }));
-jest.mock('../../packages/stylelint-resolver');
+jest.mock('../../packages/ec0lint-style-resolver');
 jest.mock('../../documents');
 
 import os from 'os';
@@ -49,13 +49,13 @@ const createMockDocument = (code: string, uri = '/path/to/file.css'): TextDocume
 
 const mockConnection = {} as unknown as Connection;
 
-describe('StylelintRunner', () => {
+describe('Ec0lintRunner', () => {
 	beforeEach(() => {
 		mockedOS.__mockPlatform('linux');
 		mockedPath.__mockPlatform('posix');
 	});
 
-	test('should return no diagnostics if Stylelint cannot be resolved', async () => {
+	test('should return no diagnostics if ec0lint cannot be resolved', async () => {
 		mockedResolver.mockImplementation(createMockResolver());
 
 		const results = await new Ec0lintStyleRunner(mockConnection).lintDocument(createMockDocument(''));
@@ -181,7 +181,7 @@ describe('StylelintRunner', () => {
 		);
 	});
 
-	test('with stylelintPath, should call the resolver with the path', async () => {
+	test('with ec0lintPath, should call the resolver with the path', async () => {
 		expect.assertions(1);
 
 		mockedGetWorkspaceFolder.mockResolvedValueOnce('/workspace');
@@ -189,7 +189,7 @@ describe('StylelintRunner', () => {
 		mockedResolver.mockImplementation(
 			createMockResolver(undefined, async (serverOptions) => {
 				expect(serverOptions).toEqual({
-					stylelintPath: '/path/to/ec0lint-style',
+					ec0lintPath: '/path/to/ec0lint-style',
 				});
 
 				return {

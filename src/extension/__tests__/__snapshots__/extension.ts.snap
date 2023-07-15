@@ -2,7 +2,7 @@
 
 exports[`Extension entry point should create a language client 1`] = `
 Array [
-  "Stylelint",
+  "ec0lint",
   Object {
     "debug": Object {
       "module": "mock-path",
@@ -18,7 +18,7 @@ Array [
     },
   },
   Object {
-    "diagnosticCollectionName": "Stylelint",
+    "diagnosticCollectionName": "ec0lint",
     "documentSelector": Array [
       Object {
         "scheme": "file",

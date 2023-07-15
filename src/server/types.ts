@@ -1,7 +1,7 @@
 import type { Connection } from 'vscode-languageserver';
 import type { TextDocuments } from 'vscode-languageserver/node';
 import type { TextDocument, TextEdit } from 'vscode-languageserver-textdocument';
-import { CodeActionKind as VSCodeActionKind } from 'vscode-languageserver-types';
+// import { CodeActionKind as VSCodeActionKind } from 'vscode-languageserver-types';
 import type LSP from 'vscode-languageserver-protocol';
 // eslint-disable-next-line node/no-unpublished-import
 import type Ec0lintStyle from 'ec0lint-style';

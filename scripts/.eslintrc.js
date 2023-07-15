@@ -1,6 +1,6 @@
 'use strict';
 
-/** @type {import('eslint').Linter.Config} */
+/** @type {import('ec0lint-style').Linter.Config} */
 const config = {
 	rules: {
 		'no-console': 'off',

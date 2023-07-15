@@ -17,7 +17,7 @@ const mockedPackages = packages as jest.Mocked<typeof packages>;
 
 mockedPath.__mockPlatform('posix');
 
-describe('buildStylelintOptions', () => {
+describe('buildEc0lintOptions', () => {
 	beforeEach(() => {
 		mockedPackages.findPackageRoot.mockReset();
 	});
@@ -25,21 +25,21 @@ describe('buildStylelintOptions', () => {
 	test('with no options, should only set ignore path', async () => {
 		const result = await buildEc0lintStyleOptions('/path/to/file.css', '/path');
 
-		expect(result).toEqual({ ignorePath: '/path/.stylelintignore' });
+		expect(result).toEqual({ ignorePath: '/path/.ec0lintignore' });
 	});
 
 	test('should only override ignore path if document is in workspace', async () => {
 		const result1 = await buildEc0lintStyleOptions('/path/to/file.css', '/path', {
-			ignorePath: './stylelintignore',
+			ignorePath: './ec0lintignore',
 		});
 
-		expect(result1).toEqual({ ignorePath: '/path/.stylelintignore' });
+		expect(result1).toEqual({ ignorePath: '/path/.ec0lintignore' });
 
 		const result2 = await buildEc0lintStyleOptions('/path/to/file.css', '/workspace', {
-			ignorePath: './stylelintignore',
+			ignorePath: './ec0lintignore',
 		});
 
-		expect(result2).toEqual({ ignorePath: './stylelintignore' });
+		expect(result2).toEqual({ ignorePath: './ec0lintignore' });
 	});
 
 	test('with no ignore path or workspace folder, should set ignore path to package root', async () => {
@@ -47,7 +47,7 @@ describe('buildStylelintOptions', () => {
 
 		const result = await buildEc0lintStyleOptions('/path/to/file.css');
 
-		expect(result).toEqual({ ignorePath: '/path/.stylelintignore' });
+		expect(result).toEqual({ ignorePath: '/path/.ec0lintignore' });
 	});
 
 	test('with no ignore path, when document is not in workspace, should set ignore path to package root', async () => {
@@ -55,7 +55,7 @@ describe('buildStylelintOptions', () => {
 
 		const result = await buildEc0lintStyleOptions('/path/to/file.css', '/workspace');
 
-		expect(result).toEqual({ ignorePath: '/path/.stylelintignore' });
+		expect(result).toEqual({ ignorePath: '/path/.ec0lintignore' });
 	});
 
 	test('with no ignore path, package root, or workspace, should set ignore path to URI root', async () => {
@@ -63,7 +63,7 @@ describe('buildStylelintOptions', () => {
 
 		const result = await buildEc0lintStyleOptions('/path/to/file.css');
 
-		expect(result).toEqual({ ignorePath: '/.stylelintignore' });
+		expect(result).toEqual({ ignorePath: '/.ec0lintignore' });
 	});
 
 	test('with no options or document FS path, should not set any options', async () => {
@@ -79,11 +79,11 @@ describe('buildStylelintOptions', () => {
 
 		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
-			configFile: '/path/stylelint.config.js',
+			configFile: '/path/ec0lint.config.js',
 			configBasedir: '/path',
 			customSyntax: 'postcss-scss',
 			ignoreDisables: false,
-			ignorePath: '/.stylelintignore',
+			ignorePath: '/.ec0lintignore',
 			reportDescriptionlessDisables: false,
 			reportNeedlessDisables: false,
 			reportInvalidScopeDisables: false,
@@ -91,7 +91,7 @@ describe('buildStylelintOptions', () => {
 
 		const result = await buildEc0lintStyleOptions('/path/to/file.css', '/path', options);
 
-		expect(result).toEqual({ ...options, ignorePath: '/path/.stylelintignore' });
+		expect(result).toEqual({ ...options, ignorePath: '/path/.ec0lintignore' });
 	});
 
 	test('with runner options, should override base options', async () => {
@@ -99,11 +99,11 @@ describe('buildStylelintOptions', () => {
 
 		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
-			configFile: '/path/stylelint.config.js',
+			configFile: '/path/ec0lint.config.js',
 			configBasedir: '/path',
 			customSyntax: 'postcss-scss',
 			ignoreDisables: true,
-			ignorePath: '/.stylelintignore',
+			ignorePath: '/.ec0lintignore',
 			reportDescriptionlessDisables: true,
 			reportNeedlessDisables: true,
 			reportInvalidScopeDisables: true,
@@ -111,7 +111,7 @@ describe('buildStylelintOptions', () => {
 
 		const runnerOptions: RunnerOptions = {
 			config: { rules: { 'block-no-empty': true } },
-			configFile: '/workspace/stylelint.config.js',
+			configFile: '/workspace/ec0lint.config.js',
 			configBasedir: '/workspace',
 			customSyntax: 'postcss-html',
 			ignoreDisables: false,
@@ -138,11 +138,11 @@ describe('buildStylelintOptions', () => {
 
 		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
-			configFile: '/path/stylelint.config.js',
+			configFile: '/path/ec0lint.config.js',
 			configBasedir: '/path',
 			customSyntax: 'postcss-scss',
 			ignoreDisables: true,
-			ignorePath: '/.stylelintignore',
+			ignorePath: '/.ec0lintignore',
 			reportDescriptionlessDisables: true,
 			reportNeedlessDisables: true,
 			reportInvalidScopeDisables: true,
@@ -150,7 +150,7 @@ describe('buildStylelintOptions', () => {
 
 		const runnerOptions: RunnerOptions = {
 			config: { rules: { 'block-no-empty': true } },
-			configFile: '${workspaceFolder}/stylelint.config.js',
+			configFile: '${workspaceFolder}/ec0lint.config.js',
 			configBasedir: '/workspace',
 			customSyntax: '${workspaceFolder}/postcss-html',
 			ignoreDisables: false,
@@ -169,10 +169,10 @@ describe('buildStylelintOptions', () => {
 		expect(result).toEqual({
 			...options,
 			...runnerOptions,
-			configFile: '/workspace/stylelint.config.js',
+			configFile: '/workspace/ec0lint.config.js',
 			configBasedir: '/workspace',
 			customSyntax: '/workspace/postcss-html',
-			ignorePath: '/workspace/.stylelintignore',
+			ignorePath: '/workspace/.ec0lintignore',
 		});
 	});
 
@@ -181,11 +181,11 @@ describe('buildStylelintOptions', () => {
 
 		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
-			configFile: '/path/stylelint.config.js',
+			configFile: '/path/ec0lint.config.js',
 			configBasedir: '/path',
 			customSyntax: 'postcss-scss',
 			ignoreDisables: true,
-			ignorePath: '/.stylelintignore',
+			ignorePath: '/.ec0lintignore',
 			reportDescriptionlessDisables: true,
 			reportNeedlessDisables: true,
 			reportInvalidScopeDisables: true,
@@ -193,7 +193,7 @@ describe('buildStylelintOptions', () => {
 
 		const runnerOptions: RunnerOptions = {
 			config: { rules: { 'block-no-empty': true } },
-			configFile: '${workspaceFolder}/stylelint.config.js',
+			configFile: '${workspaceFolder}/ec0lint.config.js',
 			configBasedir: '/workspace',
 			customSyntax: '${workspaceFolder}/postcss-html',
 			ignoreDisables: false,
@@ -213,7 +213,7 @@ describe('buildStylelintOptions', () => {
 			...options,
 			...runnerOptions,
 			configBasedir: '/workspace',
-			ignorePath: '/.stylelintignore',
+			ignorePath: '/.ec0lintignore',
 		});
 	});
 
@@ -222,11 +222,11 @@ describe('buildStylelintOptions', () => {
 
 		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
-			configFile: '/path/stylelint.config.js',
+			configFile: '/path/ec0lint.config.js',
 			configBasedir: '/path',
 			customSyntax: 'postcss-scss',
 			ignoreDisables: true,
-			ignorePath: '/.stylelintignore',
+			ignorePath: '/.ec0lintignore',
 			reportDescriptionlessDisables: true,
 			reportNeedlessDisables: true,
 			reportInvalidScopeDisables: true,
@@ -234,7 +234,7 @@ describe('buildStylelintOptions', () => {
 
 		const runnerOptions: RunnerOptions = {
 			config: { rules: { 'block-no-empty': true } },
-			configFile: '/workspace/stylelint.config.js',
+			configFile: '/workspace/ec0lint.config.js',
 			configBasedir: './base',
 			customSyntax: '/workspace/postcss-html',
 			ignoreDisables: false,
@@ -254,7 +254,7 @@ describe('buildStylelintOptions', () => {
 			...options,
 			...runnerOptions,
 			configBasedir: '/workspace/base',
-			ignorePath: '/workspace/.stylelintignore',
+			ignorePath: '/workspace/.ec0lintignore',
 		});
 	});
 
@@ -263,11 +263,11 @@ describe('buildStylelintOptions', () => {
 
 		const options: Ec0lintStyle.LinterOptions = {
 			config: {},
-			configFile: '/path/stylelint.config.js',
+			configFile: '/path/ec0lint.config.js',
 			configBasedir: '/path',
 			customSyntax: 'postcss-scss',
 			ignoreDisables: true,
-			ignorePath: '/.stylelintignore',
+			ignorePath: '/.ec0lintignore',
 			reportDescriptionlessDisables: true,
 			reportNeedlessDisables: true,
 			reportInvalidScopeDisables: true,
@@ -275,7 +275,7 @@ describe('buildStylelintOptions', () => {
 
 		const runnerOptions: RunnerOptions = {
 			config: { rules: { 'block-no-empty': true } },
-			configFile: '/workspace/stylelint.config.js',
+			configFile: '/workspace/ec0lint.config.js',
 			configBasedir: './base',
 			customSyntax: '/workspace/postcss-html',
 			ignoreDisables: false,
@@ -295,7 +295,7 @@ describe('buildStylelintOptions', () => {
 			...options,
 			...runnerOptions,
 			configBasedir: 'base',
-			ignorePath: '/.stylelintignore',
+			ignorePath: '/.ec0lintignore',
 		});
 	});
 });
