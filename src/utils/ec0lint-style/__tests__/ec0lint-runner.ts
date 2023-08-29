@@ -181,7 +181,7 @@ describe('Ec0lintRunner', () => {
 		);
 	});
 
-	test('with ec0lintPath, should call the resolver with the path', async () => {
+	test('with ec0lintStylePath, should call the resolver with the path', async () => {
 		expect.assertions(1);
 
 		mockedGetWorkspaceFolder.mockResolvedValueOnce('/workspace');
@@ -189,7 +189,7 @@ describe('Ec0lintRunner', () => {
 		mockedResolver.mockImplementation(
 			createMockResolver(undefined, async (serverOptions) => {
 				expect(serverOptions).toEqual({
-					ec0lintPath: '/path/to/ec0lint-style',
+					ec0lintStylePath: '/path/to/ec0lint-style',
 				});
 
 				return {
@@ -274,7 +274,7 @@ describe('Ec0lintRunner', () => {
 
 		expect(mockLogger.debug).toHaveBeenCalledTimes(1);
 		expect(mockLogger.debug).toHaveBeenCalledWith(
-			expect.stringMatching(/^Running Stylelint/),
+			expect.stringMatching(/^Running Ec0lint/),
 			expect.any(Object),
 		);
 	});

@@ -7,16 +7,16 @@ const createTextDocument = (code: string) =>
 
 describe('getDisableType', () => {
 	test("if the position is after a disable comment's type, should return its type", () => {
-		const code = '\n/* stylelint-disable indentation */\na {}';
-		const position = Position.create(1, 21);
+		const code = '\n/* ec0lint-style-disable indentation */\na {}';
+		const position = Position.create(1, 27);
 
 		const document = createTextDocument(code);
 
-		expect(getDisableType(document, position)).toBe('stylelint-disable');
+		expect(getDisableType(document, position)).toBe('ec0lint-style-disable');
 	});
 
 	test("if the position is before the end of a disable comment's type, should return undefined", () => {
-		const code = '\n/* stylelint-disable indentation */\na {}';
+		const code = '\n/* ec0lint-style-disable indentation */\na {}';
 		const position = Position.create(1, 20);
 
 		const document = createTextDocument(code);
@@ -34,7 +34,7 @@ describe('getDisableType', () => {
 	});
 
 	test('if the position is inside a disable comment with a broken end, should return undefined', () => {
-		const code = '\n/* stylelint-disable indentation \na {}';
+		const code = '\n/* ec0lint-style-disable indentation \na {}';
 		const position = Position.create(1, 21);
 
 		const document = createTextDocument(code);

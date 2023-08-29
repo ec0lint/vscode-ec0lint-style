@@ -1,9 +1,8 @@
 import { EventEmitter } from 'events';
-import { LanguageClient, SettingMonitor, ExecuteCommandRequest } from 'vscode-languageclient/node';
-import { workspace, commands, window } from 'vscode';
+import { LanguageClient, SettingMonitor } from 'vscode-languageclient/node';
+import { workspace, window } from 'vscode';
 import { ApiEvent, PublicApi } from './types';
 import {
-	CommandId,
 	DidRegisterDocumentFormattingEditProviderNotificationParams,
 	Notification,
 } from '../server';

@@ -11,7 +11,7 @@ export type PackageManager = 'npm' | 'yarn' | 'pnpm';
  */
 export type ResolverOptions = {
 	packageManager?: PackageManager;
-	ec0lintPath?: string;
+	ec0lintStylePath?: string;
 };
 
 /**

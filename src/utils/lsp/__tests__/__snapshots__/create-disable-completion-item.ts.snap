@@ -1,101 +1,101 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`createDisableCompletionItem should create a stylelint-disable completion item 1`] = `
+exports[`createDisableCompletionItem should create a ec0lint-style-disable completion item 1`] = `
 Object {
-  "detail": "Turn off all Stylelint or individual rules, after which you do not need to re-enable Stylelint. (Stylelint)",
+  "detail": "Turn off all ec0lint-style or individual rules, after which you do not need to re-enable ec0lint-style. (ec0lint-style)",
   "documentation": Object {
     "kind": "markdown",
     "value": "\`\`\`css
-/* stylelint-disable rule */
-/* stylelint-enable rule */
+/* ec0lint-style-disable rule */
+/* ec0lint-style-enable rule */
 \`\`\`",
   },
-  "insertText": "/* stylelint-disable \${0:rule} */
-/* stylelint-enable \${0:rule} */",
+  "insertText": "/* ec0lint-style-disable \${0:rule} */
+/* ec0lint-style-enable \${0:rule} */",
   "insertTextFormat": 2,
   "kind": 15,
-  "label": "stylelint-disable",
+  "label": "ec0lint-style-disable",
 }
 `;
 
-exports[`createDisableCompletionItem should create a stylelint-disable completion item for a specific rule 1`] = `
+exports[`createDisableCompletionItem should create a ec0lint-style-disable completion item for a specific rule 1`] = `
 Object {
-  "detail": "Turn off all Stylelint or individual rules, after which you do not need to re-enable Stylelint. (Stylelint)",
+  "detail": "Turn off all ec0lint-style or individual rules, after which you do not need to re-enable ec0lint-style. (ec0lint-style)",
   "documentation": Object {
     "kind": "markdown",
     "value": "\`\`\`css
-/* stylelint-disable indentation */
-/* stylelint-enable indentation */
+/* ec0lint-style-disable indentation */
+/* ec0lint-style-enable indentation */
 \`\`\`",
   },
-  "insertText": "/* stylelint-disable \${0:indentation} */
-/* stylelint-enable \${0:indentation} */",
+  "insertText": "/* ec0lint-style-disable \${0:indentation} */
+/* ec0lint-style-enable \${0:indentation} */",
   "insertTextFormat": 2,
   "kind": 15,
-  "label": "stylelint-disable",
+  "label": "ec0lint-style-disable",
 }
 `;
 
-exports[`createDisableCompletionItem should create a stylelint-disable-line completion item 1`] = `
+exports[`createDisableCompletionItem should create a ec0lint-style-disable-line completion item 1`] = `
 Object {
-  "detail": "Turn off Stylelint rules for individual lines only, after which you do not need to explicitly re-enable them. (Stylelint)",
+  "detail": "Turn off ec0lint-style rules for individual lines only, after which you do not need to explicitly re-enable them. (ec0lint-style)",
   "documentation": Object {
     "kind": "markdown",
     "value": "\`\`\`css
-/* stylelint-disable-line rule */
+/* ec0lint-style-disable-line rule */
 \`\`\`",
   },
-  "insertText": "/* stylelint-disable-line \${0:rule} */",
+  "insertText": "/* ec0lint-style-disable-line \${0:rule} */",
   "insertTextFormat": 2,
   "kind": 15,
-  "label": "stylelint-disable-line",
+  "label": "ec0lint-style-disable-line",
 }
 `;
 
-exports[`createDisableCompletionItem should create a stylelint-disable-line completion item for a specific rule 1`] = `
+exports[`createDisableCompletionItem should create a ec0lint-style-disable-line completion item for a specific rule 1`] = `
 Object {
-  "detail": "Turn off Stylelint rules for individual lines only, after which you do not need to explicitly re-enable them. (Stylelint)",
+  "detail": "Turn off ec0lint-style rules for individual lines only, after which you do not need to explicitly re-enable them. (ec0lint-style)",
   "documentation": Object {
     "kind": "markdown",
     "value": "\`\`\`css
-/* stylelint-disable-line indentation */
+/* ec0lint-style-disable-line indentation */
 \`\`\`",
   },
-  "insertText": "/* stylelint-disable-line \${0:indentation} */",
+  "insertText": "/* ec0lint-style-disable-line \${0:indentation} */",
   "insertTextFormat": 2,
   "kind": 15,
-  "label": "stylelint-disable-line",
+  "label": "ec0lint-style-disable-line",
 }
 `;
 
-exports[`createDisableCompletionItem should create a stylelint-disable-next-line completion item 1`] = `
+exports[`createDisableCompletionItem should create a ec0lint-style-disable-next-line completion item 1`] = `
 Object {
-  "detail": "Turn off Stylelint rules for the next line only, after which you do not need to explicitly re-enable them. (Stylelint)",
+  "detail": "Turn off ec0lint-style rules for the next line only, after which you do not need to explicitly re-enable them. (ec0lint-style)",
   "documentation": Object {
     "kind": "markdown",
     "value": "\`\`\`css
-/* stylelint-disable-next-line rule */
+/* ec0lint-style-disable-next-line rule */
 \`\`\`",
   },
-  "insertText": "/* stylelint-disable-next-line \${0:rule} */",
+  "insertText": "/* ec0lint-style-disable-next-line \${0:rule} */",
   "insertTextFormat": 2,
   "kind": 15,
-  "label": "stylelint-disable-next-line",
+  "label": "ec0lint-style-disable-next-line",
 }
 `;
 
-exports[`createDisableCompletionItem should create a stylelint-disable-next-line completion item for a specific rule 1`] = `
+exports[`createDisableCompletionItem should create a ec0lint-style-disable-next-line completion item for a specific rule 1`] = `
 Object {
-  "detail": "Turn off Stylelint rules for the next line only, after which you do not need to explicitly re-enable them. (Stylelint)",
+  "detail": "Turn off ec0lint-style rules for the next line only, after which you do not need to explicitly re-enable them. (ec0lint-style)",
   "documentation": Object {
     "kind": "markdown",
     "value": "\`\`\`css
-/* stylelint-disable-next-line indentation */
+/* ec0lint-style-disable-next-line indentation */
 \`\`\`",
   },
-  "insertText": "/* stylelint-disable-next-line \${0:indentation} */",
+  "insertText": "/* ec0lint-style-disable-next-line \${0:indentation} */",
   "insertTextFormat": 2,
   "kind": 15,
-  "label": "stylelint-disable-next-line",
+  "label": "ec0lint-style-disable-next-line",
 }
 `;

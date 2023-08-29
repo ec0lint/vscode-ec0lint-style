@@ -276,7 +276,7 @@ describe('Ec0lintLanguageServer', () => {
 		expect(mockLogger.debug).toHaveBeenCalledWith('Registering DidChangeConfigurationNotification');
 		expect(mockConnection.client.register).toHaveBeenCalledWith(
 			LSP.DidChangeConfigurationNotification.type,
-			{ section: 'ec0lint' },
+			{ section: 'ec0lint-style' },
 		);
 	});
 
@@ -490,11 +490,11 @@ describe('Ec0lintLanguageServer', () => {
 
 		expect(mockConnection.workspace.getConfiguration).toHaveBeenCalledWith({
 			scopeUri: 'uri',
-			section: 'ec0lint',
+			section: 'ec0lint-style',
 		});
 		expect(mockConnection.workspace.getConfiguration).toHaveBeenCalledWith({
 			scopeUri: 'uri2',
-			section: 'ec0lint',
+			section: 'ec0lint-style',
 		});
 		expect(options1).toMatchSnapshot();
 		expect(options2).toMatchSnapshot();
@@ -1089,7 +1089,7 @@ describe('Ec0lintLanguageServer', () => {
 		);
 
 		expect(await promise).toBeUndefined();
-		expect(mockLogger.warn).toHaveBeenCalledWith('Failed to resolve ec0lint', {
+		expect(mockLogger.warn).toHaveBeenCalledWith('Failed to resolve ec0lint-style', {
 			uri: 'file:///test.css',
 		});
 	});

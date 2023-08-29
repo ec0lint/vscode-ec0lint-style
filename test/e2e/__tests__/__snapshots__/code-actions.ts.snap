@@ -2,9 +2,9 @@
 
 exports[`Code actions should disable rules for a specific line with a comment on the previous line 1`] = `
 "a {
-  /* stylelint-disable-next-line indentation */
+  /* ec0lint-style-disable-next-line indentation */
   font-size: 1.2em;
-    /* stylelint-disable-next-line comment-no-empty */
+    /* ec0lint-style-disable-next-line comment-no-empty */
   color: #00;
 }
 "
@@ -12,18 +12,18 @@ exports[`Code actions should disable rules for a specific line with a comment on
 
 exports[`Code actions should disable rules for a specific line with a comment on the same line 1`] = `
 "a {
-  font-size: 1.2em; /* stylelint-disable-line indentation */
-    /* stylelint-disable-next-line comment-no-empty */
+  font-size: 1.2em; /* ec0lint-style-disable-line indentation */
+    /* ec0lint-style-disable-next-line comment-no-empty */
   color: #00;
 }
 "
 `;
 
 exports[`Code actions should disable rules for an entire file 1`] = `
-"/* stylelint-disable indentation */
+"/* ec0lint-style-disable indentation */
 a {
   font-size: 1.2em;
-    /* stylelint-disable-next-line comment-no-empty */
+    /* ec0lint-style-disable-next-line comment-no-empty */
   color: #00;
 }
 "
@@ -31,7 +31,7 @@ a {
 
 exports[`Code actions should disable rules for an entire file with a shebang 1`] = `
 "#!/usr/bin/env node
-/* stylelint-disable color-no-invalid-hex */
+/* ec0lint-style-disable color-no-invalid-hex */
 /* eslint-disable node/shebang */
 'use strict';
 
@@ -52,7 +52,7 @@ Array [
         Array [
           Object {
             "newEol": undefined,
-            "newText": "  /* stylelint-disable-next-line indentation */
+            "newText": "  /* ec0lint-style-disable-next-line indentation */
 ",
             "range": Array [
               Object {
@@ -81,7 +81,7 @@ Array [
         Array [
           Object {
             "newEol": undefined,
-            "newText": "/* stylelint-disable indentation */
+            "newText": "/* ec0lint-style-disable indentation */
 ",
             "range": Array [
               Object {

@@ -264,6 +264,17 @@ export function getConnection(): MockConnection {
  */
 export function getLogger(): jest.Mocked<winston.Logger> {
 	const logger: jest.Mocked<winston.Logger> = Object.assign(jest.fn(), {
+		rejections: Object.assign(jest.fn(), {
+			catcher: false,
+			getAllInfo: jest.fn(),
+			getOsInfo: jest.fn(),
+			getProcessInfo: jest.fn(),
+			getTrace: jest.fn(),
+			handle: jest.fn(),
+			handlers: new Map(),
+			logger: undefined as unknown as winston.Logger,
+			unhandle: jest.fn(),
+		}),
 		[Symbol.asyncIterator]: jest.fn(),
 		_destroy: jest.fn(),
 		_final: jest.fn(),

@@ -230,7 +230,7 @@ export class Ec0lintStyleLanguageServer {
 	 * Resolves the ec0lint-style package for the given document.
 	 */
 	async #resolveEc0lintStyle(document: TextDocument): Promise<Ec0lintStyleResolutionResult | undefined> {
-		this.#logger?.debug('Resolving Ec0lintStyle', { uri: document.uri });
+		this.#logger?.debug('Resolving ec0lint-style', { uri: document.uri });
 
 		try {
 			const options = await this.#getOptions(document.uri);
@@ -238,18 +238,18 @@ export class Ec0lintStyleLanguageServer {
 			const result = await this.#resolver.resolve(options, document);
 
 			if (result) {
-				this.#logger?.debug('Ec0lintStyle resolved', {
+				this.#logger?.debug('ec0lint-style resolved', {
 					uri: document.uri,
 					resolvedPath: result.resolvedPath,
 				});
 			} else {
-				this.#logger?.warn('Failed to resolve Ec0lintStyle', { uri: document.uri });
+				this.#logger?.warn('Failed to resolve ec0lint-style', { uri: document.uri });
 			}
 
 			return result;
 		} catch (error) {
 			this.#displayError(error);
-			this.#logger?.error('Error resolving Ec0lintStyle', { uri: document.uri, error });
+			this.#logger?.error('Error resolving ec0lint-style', { uri: document.uri, error });
 
 			return undefined;
 		}

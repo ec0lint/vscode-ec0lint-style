@@ -446,29 +446,29 @@ describe('StylelintRunner with reportDescriptionlessDisables', () => {
 				'css',
 				`
 .baz {
-    /* stylelint-disable-next-line indentation */
+    /* ec0lint-style-disable-next-line indentation */
   color: red;
 }
-/* stylelint-disable indentation */
+/* ec0lint-style-disable indentation */
 .baz {
   color: red;
 }
-/* stylelint-enable indentation */
+/* ec0lint-style-enable indentation */
 .baz {
-  color: red; /* stylelint-disable-line indentation */
+  color: red; /* ec0lint-style-disable-line indentation */
 }
 
 .baz {
-    /* stylelint-disable-next-line indentation -- with a description */
+    /* ec0lint-style-disable-next-line indentation -- with a description */
   color: red;
 }
-/* stylelint-disable indentation -- with a description */
+/* ec0lint-style-disable indentation -- with a description */
 .baz {
   color: red;
 }
-/* stylelint-enable indentation */
+/* ec0lint-style-enable indentation */
 .baz {
-  color: red; /* stylelint-disable-line indentation -- with a description */
+  color: red; /* ec0lint-style-disable-line indentation -- with a description */
 }
 `,
 			),
@@ -492,21 +492,21 @@ describe('StylelintRunner with reportNeedlessDisables', () => {
 				'css',
 				`
 .foo {
-  /* stylelint-disable-next-line indentation */
+  /* ec0lint-style-disable-next-line indentation */
     color: red;
 }
 
-/* stylelint-disable indentation */
+/* ec0lint-style-disable indentation */
 .bar {
     color: red;
 }
-/* stylelint-enable indentation */
+/* ec0lint-style-enable indentation */
 
 .baz {
-    color: red; /* stylelint-disable-line indentation */
+    color: red; /* ec0lint-style-disable-line indentation */
 }
 
-/* stylelint-disable indentation */
+/* ec0lint-style-disable indentation */
 .bar {
     color: red;
 }
@@ -531,19 +531,19 @@ describe('StylelintRunner with reportInvalidScopeDisables', () => {
 				'test.css',
 				'css',
 				`
-/* stylelint-disable-next-line foo */
+/* ec0lint-style-disable-next-line foo */
 
-/* stylelint-disable-line foo */
+/* ec0lint-style-disable-line foo */
 
-/* stylelint-disable foo */
-/* stylelint-enable foo */
+/* ec0lint-style-disable foo */
+/* ec0lint-style-enable foo */
 
-/* stylelint-disable-next-line indentation */
+/* ec0lint-style-disable-next-line indentation */
 
-/* stylelint-disable-line indentation */
+/* ec0lint-style-disable-line indentation */
 
-/* stylelint-disable indentation */
-/* stylelint-enable indentation */
+/* ec0lint-style-disable indentation */
+/* ec0lint-style-enable indentation */
 `,
 			),
 			{

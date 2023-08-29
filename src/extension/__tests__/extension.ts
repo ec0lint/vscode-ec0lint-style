@@ -121,65 +121,6 @@ describe('Extension entry point', () => {
 	`);
 	});
 
-	it('should register an auto-fix command', () => {
-		const disposable = { dispose: () => undefined };
-
-		mockCommands.registerCommand.mockReturnValueOnce(disposable);
-
-		activate(mockExtensionContext);
-
-		const { subscriptions } = mockExtensionContext;
-
-		expect(mockCommands.registerCommand).toHaveBeenCalled();
-
-		// cspell:enable
-		expect(subscriptions).toContain(disposable);
-	});
-
-	it('with an active text editor, should send auto-fix commands to the language server', () => {
-		window.activeTextEditor = mockTextEditor;
-
-		activate(mockExtensionContext);
-
-		mockCommands.registerCommand.mock.calls[0][1](undefined);
-
-		expect(sendRequest).toHaveBeenCalledTimes(1);
-		expect(sendRequest.mock.calls[0]).toMatchSnapshot();
-		expect(afterSendRequest).toHaveBeenCalledTimes(1);
-		expect(afterSendRequest.mock.calls[0][0]).toBeUndefined();
-		expect(mockWindow.showErrorMessage).not.toHaveBeenCalled();
-	});
-
-	it('without an active text editor, should not send auto-fix commands to the language server', () => {
-		window.activeTextEditor = undefined;
-
-		activate(mockExtensionContext);
-
-		mockCommands.registerCommand.mock.calls[0][1](undefined);
-
-		expect(sendRequest).not.toHaveBeenCalled();
-		expect(afterSendRequest).not.toHaveBeenCalled();
-		expect(mockWindow.showErrorMessage).not.toHaveBeenCalled();
-	});
-
-	it('should show an error message if sending the command request fails', () => {
-		window.activeTextEditor = mockTextEditor;
-
-		activate(mockExtensionContext);
-
-		mockCommands.registerCommand.mock.calls[0][1](undefined);
-		afterSendRequest.mock.calls[0][1](undefined, new Error());
-
-		expect(sendRequest).toHaveBeenCalledTimes(1);
-		expect(afterSendRequest).toHaveBeenCalledTimes(1);
-		expect(mockWindow.showErrorMessage).toHaveBeenCalledTimes(1);
-		expect(mockWindow.showErrorMessage.mock.calls[0]).toMatchInlineSnapshot(`
-		Array [
-		  "Failed to apply ec0lint-style fixes to the document. Please consider opening an issue with steps to reproduce.",
-		]
-	`);
-	});
-
 	it('should monitor settings', () => {
 		const disposable = { dispose: () => undefined };
 
@@ -216,19 +157,6 @@ describe('Extension entry point', () => {
 		onNotification.mock.calls[0][1]();
 
 		expect(api.codeActionReady).toBe(true);
-	});
-
-	it('should listen for the DidRegisterDocumentFormattingEditProvider notification', () => {
-		activate(mockExtensionContext);
-
-		afterOnReady.mock.calls[0][0]();
-
-		expect(onReady).toHaveBeenCalled();
-		expect(onNotification).toHaveBeenCalled();
-		expect(onNotification.mock.calls[1][0]).toBe(
-			Notification.DidRegisterDocumentFormattingEditProvider,
-		);
-		expect(onNotification.mock.calls[1][1]).toBeInstanceOf(Function);
 	});
 
 	it('should emit the DidRegisterDocumentFormattingEditProvider event when the DidRegisterDocumentFormattingEditProvider notification is received', async () => {

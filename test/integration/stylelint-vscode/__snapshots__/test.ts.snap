@@ -19,7 +19,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -43,7 +43,7 @@ Array [
       },
     },
     "severity": 2,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
   Object {
     "code": "indentation",
@@ -62,7 +62,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -83,7 +83,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
   Object {
     "code": "this-rule-also-does-not-exist",
@@ -99,7 +99,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -120,7 +120,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -141,7 +141,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -162,7 +162,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -188,7 +188,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -212,7 +212,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
   Object {
     "code": "font-weight-notation",
@@ -231,7 +231,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -255,7 +255,7 @@ Array [
       },
     },
     "severity": 1,
-    "source": "Stylelint",
+    "source": "ec0lint-style",
   },
 ]
 `;
@@ -280,7 +280,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
   "output": "
@@ -336,7 +336,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }
@@ -359,7 +359,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "--report-descriptionless-disables",
@@ -375,7 +375,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "--report-descriptionless-disables",
@@ -391,7 +391,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }
@@ -414,7 +414,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "--report-invalid-scope-disables",
@@ -430,7 +430,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "--report-invalid-scope-disables",
@@ -446,7 +446,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }
@@ -472,7 +472,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "--report-needless-disables",
@@ -488,7 +488,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "--report-needless-disables",
@@ -504,7 +504,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "--report-needless-disables",
@@ -520,7 +520,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "--report-needless-disables",
@@ -536,7 +536,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }
@@ -559,7 +559,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }
@@ -585,7 +585,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }

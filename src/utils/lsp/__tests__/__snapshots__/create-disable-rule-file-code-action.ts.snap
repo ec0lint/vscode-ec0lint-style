@@ -8,7 +8,7 @@ Object {
       Object {
         "edits": Array [
           Object {
-            "newText": "/* stylelint-disable rule */
+            "newText": "/* ec0lint-style-disable rule */
 ",
             "range": Object {
               "end": Object {
@@ -42,7 +42,7 @@ Object {
       Object {
         "edits": Array [
           Object {
-            "newText": "/* stylelint-disable rule */
+            "newText": "/* ec0lint-style-disable rule */
 ",
             "range": Object {
               "end": Object {

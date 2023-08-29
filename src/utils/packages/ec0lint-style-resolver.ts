@@ -123,9 +123,9 @@ export class Ec0lintResolver {
 			const rootRelativeRequire = createRequire(pnpPath);
 
 			const ec0lintEntryPath = rootRelativeRequire.resolve('ec0lint-style');
-			const ec0lintPath = await findPackageRoot(ec0lintEntryPath);
+			const ec0lintStylePath = await findPackageRoot(ec0lintEntryPath);
 
-			if (!ec0lintPath) {
+			if (!ec0lintStylePath) {
 				this.#logger?.warn('Failed to find the Ec0lint package root', {
 					path: ec0lintEntryPath,
 				});
@@ -137,7 +137,7 @@ export class Ec0lintResolver {
 
 			const result = {
 				ec0lint: Ec0lintStyle,
-				resolvedPath: ec0lintPath,
+				resolvedPath: ec0lintStylePath,
 			};
 
 			this.#logger?.debug('Resolved Ec0lint using PnP', {
@@ -162,16 +162,16 @@ export class Ec0lintResolver {
 		trace: TracerFn,
 	): Promise<Ec0lintStyleResolutionResult | undefined> {
 		try {
-			const ec0lintPath = await Files.resolve('ec0lint-style', globalModulesPath, cwd, trace);
+			const ec0lintStylePath = await Files.resolve('ec0lint-style', globalModulesPath, cwd, trace);
 
 			const result = {
 				// eslint-disable-next-line @typescript-eslint/no-var-requires
-				ec0lint: require(ec0lintPath) as Ec0lintStyle.PublicApi,
-				resolvedPath: ec0lintPath,
+				ec0lint: require(ec0lintStylePath) as Ec0lintStyle.PublicApi,
+				resolvedPath: ec0lintStylePath,
 			};
 
 			this.#logger?.debug('Resolved Ec0lint from node_modules', {
-				path: ec0lintPath,
+				path: ec0lintStylePath,
 			});
 
 			return result;
@@ -188,16 +188,16 @@ export class Ec0lintResolver {
 	 * If no connection is available, returns the path as-is.
 	 */
 	async #getRequirePath(
-		ec0lintPath: string,
+		ec0lintStylePath: string,
 		getWorkspaceFolderFn: () => Promise<string | undefined>,
 	): Promise<string> {
-		if (!this.#connection || path.isAbsolute(ec0lintPath)) {
-			return ec0lintPath;
+		if (!this.#connection || path.isAbsolute(ec0lintStylePath)) {
+			return ec0lintStylePath;
 		}
 
 		const workspaceFolder = await getWorkspaceFolderFn();
 
-		return workspaceFolder ? path.join(workspaceFolder, ec0lintPath) : ec0lintPath;
+		return workspaceFolder ? path.join(workspaceFolder, ec0lintStylePath) : ec0lintStylePath;
 	}
 
 	/**
@@ -207,17 +207,17 @@ export class Ec0lintResolver {
 	 * and `undefined` will be returned.
 	 */
 	async #resolveFromPath(
-		ec0lintPath: string | undefined,
+		ec0lintStylePath: string | undefined,
 		getWorkspaceFolderFn: () => Promise<string | undefined>,
 	): Promise<Ec0lintStyleResolutionResult | undefined> {
-		if (!ec0lintPath) {
+		if (!ec0lintStylePath) {
 			return undefined;
 		}
 
-		const errorMessage = `Failed to load Ec0lint from "ec0lintPath": ${ec0lintPath}.`;
+		const errorMessage = `Failed to load Ec0lint from "ec0lintStylePath": ${ec0lintStylePath}.`;
 
 		try {
-			const requirePath = await this.#getRequirePath(ec0lintPath, getWorkspaceFolderFn);
+			const requirePath = await this.#getRequirePath(ec0lintStylePath, getWorkspaceFolderFn);
 
 			// eslint-disable-next-line @typescript-eslint/no-var-requires
 			const ec0lint = require(requirePath) as Ec0lintStyle.PublicApi;
@@ -301,11 +301,11 @@ export class Ec0lintResolver {
 	 * Attempts to resolve the `ec0lint` package from the following locations,
 	 * in order:
 	 *
-	 * 1. `options.ec0lintPath`, if provided.
+	 * 1. `options.ec0lintStylePath`, if provided.
 	 * 2. `node_modules` in the workspace folder of the given document.
 	 * 3. The global `node_modules` directory for the given package manager.
 	 *
-	 * If `options.ec0lintPath` is provided, but the path to which it points
+	 * If `options.ec0lintStylePath` is provided, but the path to which it points
 	 * cannot be required, an error will be thrown. In all other cases of failed
 	 * resolution, `undefined` will be returned. Resolution fails if either the
 	 * path to the `ec0lint` package cannot be resolved or if the resolved
@@ -318,7 +318,7 @@ export class Ec0lintResolver {
 	 * @returns {Promise<Ec0lintStyleResolutionResult | undefined>}
 	 */
 	async resolve(
-		{ packageManager, ec0lintPath }: ResolverOptions,
+		{ packageManager, ec0lintStylePath }: ResolverOptions,
 		textDocument: TextDocument,
 	): Promise<Ec0lintStyleResolutionResult | undefined> {
 		const getWorkspaceFolderFn = lazyCallAsync(
@@ -326,7 +326,7 @@ export class Ec0lintResolver {
 		);
 
 		const ec0lint = await getFirstResolvedValue(
-			() => this.#resolveFromPath(ec0lintPath, getWorkspaceFolderFn),
+			() => this.#resolveFromPath(ec0lintStylePath, getWorkspaceFolderFn),
 			() => this.#resolveFromModules(textDocument, getWorkspaceFolderFn, packageManager),
 		);
 
