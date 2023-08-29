@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StylelintRunner should call stylelint.lint with the document path and given options 1`] = `
+exports[`Ec0lintRunner should call ec0lint.lint with the document path and given options 1`] = `
 Object {
   "code": "a {}",
   "codeFilename": "/path/to/file.scss",
@@ -13,40 +13,37 @@ Object {
   "fix": true,
   "formatter": [Function],
   "ignoreDisables": undefined,
-  "ignorePath": "/.stylelintignore",
+  "ignorePath": "/.ec0lint-styleignore",
   "reportDescriptionlessDisables": undefined,
   "reportInvalidScopeDisables": undefined,
   "reportNeedlessDisables": undefined,
 }
 `;
 
-exports[`StylelintRunner should return processed lint results from Stylelint with configured rules 1`] = `
+exports[`Ec0lintRunner should return processed lint results from Stylelint with configured rules 1`] = `
 Object {
   "diagnostics": Array [
     Object {
       "code": "block-no-empty",
-      "codeDescription": Object {
-        "href": "https://stylelint.io/user-guide/rules/list/block-no-empty",
-      },
-      "message": "Unexpected empty block (block-no-empty)",
+      "message": "Unknown rule block-no-empty.",
       "range": Object {
         "end": Object {
-          "character": 3,
+          "character": 1,
           "line": 0,
         },
         "start": Object {
-          "character": 2,
+          "character": 0,
           "line": 0,
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }
 `;
 
-exports[`StylelintRunner should return processed lint results from Stylelint without configured rules 1`] = `
+exports[`Ec0lintRunner should return processed lint results from Stylelint without configured rules 1`] = `
 Object {
   "diagnostics": Array [
     Object {
@@ -63,10 +60,10 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }
 `;
 
-exports[`StylelintRunner should throw errors thrown by Stylelint 1`] = `"You must pass stylelint a \`files\` glob or a \`code\` string, though not both"`;
+exports[`Ec0lintRunner should throw errors thrown by Stylelint 1`] = `"You must pass ec0lint-style a \`files\` glob or a \`code\` string, though not both"`;

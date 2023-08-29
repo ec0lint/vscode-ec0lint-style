@@ -1,5 +1,5 @@
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 
 /**
  * Package manager identifiers.
@@ -7,18 +7,18 @@ import type stylelint from 'stylelint';
 export type PackageManager = 'npm' | 'yarn' | 'pnpm';
 
 /**
- * Options for resolving the Stylelint package.
+ * Options for resolving the ec0lint-style package.
  */
 export type ResolverOptions = {
 	packageManager?: PackageManager;
-	stylelintPath?: string;
+	ec0lintStylePath?: string;
 };
 
 /**
- * Stylelint package resolution result.
+ * Ec0lint package resolution result.
  */
-export type StylelintResolutionResult = {
-	stylelint: stylelint.PublicApi;
+export type Ec0lintStyleResolutionResult = {
+	ec0lint: Ec0lintStyle.PublicApi;
 	resolvedPath: string;
 };
 

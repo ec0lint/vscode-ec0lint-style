@@ -7,7 +7,7 @@ import type { Connection, TextDocuments } from 'vscode-languageserver';
 import type winston from 'winston';
 import type { LanguageServerContext, LanguageServerOptions } from '../../src/server/types';
 import type { CommandManager, NotificationManager } from '../../src/utils/lsp';
-import type { StylelintRunner } from '../../src/utils/stylelint';
+import type { Ec0lintRunner } from '../../src/utils/ec0lint-style';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type JestFn = jest.Mock<any, any>;
@@ -264,6 +264,17 @@ export function getConnection(): MockConnection {
  */
 export function getLogger(): jest.Mocked<winston.Logger> {
 	const logger: jest.Mocked<winston.Logger> = Object.assign(jest.fn(), {
+		rejections: Object.assign(jest.fn(), {
+			catcher: false,
+			getAllInfo: jest.fn(),
+			getOsInfo: jest.fn(),
+			getProcessInfo: jest.fn(),
+			getTrace: jest.fn(),
+			handle: jest.fn(),
+			handlers: new Map(),
+			logger: undefined as unknown as winston.Logger,
+			unhandle: jest.fn(),
+		}),
 		[Symbol.asyncIterator]: jest.fn(),
 		_destroy: jest.fn(),
 		_final: jest.fn(),
@@ -468,17 +479,17 @@ export function getNotificationManager(): MockNotificationManager {
 	return manager;
 }
 
-export type MockStylelintRunner = {
-	__typed: () => StylelintRunner;
+export type MockEc0lintStyleRunner = {
+	__typed: () => Ec0lintRunner;
 	lintDocument: JestFn;
 };
 
 /**
- * Returns a mock Stylelint runner.
+ * Returns a mock ec0lint-style runner.
  */
-export function getStylelintRunner(): MockStylelintRunner {
-	const runner: MockStylelintRunner = {
-		__typed: () => runner as unknown as StylelintRunner,
+export function getEc0lintStyleRunner(): MockEc0lintStyleRunner {
+	const runner: MockEc0lintStyleRunner = {
+		__typed: () => runner as unknown as Ec0lintRunner,
 		lintDocument: jest.fn(),
 	};
 
@@ -505,7 +516,7 @@ export function getOptions(): LanguageServerOptions {
 		reportInvalidScopeDisables: false,
 		reportNeedlessDisables: false,
 		snippet: ['css', 'postcss'],
-		stylelintPath: '',
+		ec0lintStylePath: '',
 		validate: ['css', 'postcss'],
 	};
 }
@@ -517,13 +528,13 @@ export type MockLanguageServerContext = {
 	documents: MockTextDocuments;
 	commands: MockCommandManager;
 	notifications: MockNotificationManager;
-	runner: MockStylelintRunner;
+	runner: MockEc0lintStyleRunner;
 	displayError: JestFn;
 	getOptions: jest.MockedFunction<() => Promise<LanguageServerOptions>>;
 	getFixes: JestFn;
 	getModule: JestFn;
 	lintDocument: JestFn;
-	resolveStylelint: JestFn;
+	resolveEc0lintStyle: JestFn;
 };
 
 /**
@@ -537,13 +548,13 @@ export function getContext(): MockLanguageServerContext {
 		documents: getTextDocuments(),
 		commands: getCommandManager(),
 		notifications: getNotificationManager(),
-		runner: getStylelintRunner(),
+		runner: getEc0lintStyleRunner(),
 		displayError: jest.fn(),
 		getOptions: jest.fn().mockImplementation(async () => context.__options),
 		getFixes: jest.fn(),
 		getModule: jest.fn(),
 		lintDocument: jest.fn(),
-		resolveStylelint: jest.fn(),
+		resolveEc0lintStyle: jest.fn(),
 	};
 
 	return context;

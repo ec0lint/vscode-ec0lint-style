@@ -1,38 +1,30 @@
 import type { Connection } from 'vscode-languageserver';
 import type { TextDocuments } from 'vscode-languageserver/node';
 import type { TextDocument, TextEdit } from 'vscode-languageserver-textdocument';
-import { CodeActionKind as VSCodeActionKind } from 'vscode-languageserver-types';
+// import { CodeActionKind as VSCodeActionKind } from 'vscode-languageserver-types';
 import type LSP from 'vscode-languageserver-protocol';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type winston from 'winston';
-import type { StylelintRunner, LintDiagnostics } from '../utils/stylelint';
+import type { Ec0lintRunner as Ec0lintStyleRunner, LintDiagnostics } from '../utils/ec0lint-style';
 import type { ExtractKeysOfValueType } from '../utils/types';
-import type { PackageManager, StylelintResolutionResult } from '../utils/packages';
+import type { PackageManager, Ec0lintStyleResolutionResult } from '../utils/packages';
 import type { NotificationManager, CommandManager } from '../utils/lsp';
 
 /**
  * Command IDs
  */
 export enum CommandId {
-	ApplyAutoFix = 'stylelint.applyAutoFix',
-	OpenRuleDoc = 'stylelint.openRuleDoc',
+	OpenRuleDoc = 'ec0lint-style.openRuleDoc',
 }
-
-/**
- * Code action kinds
- */
-export const CodeActionKind = {
-	StylelintSourceFixAll: `${VSCodeActionKind.SourceFixAll}.stylelint`,
-};
 
 /**
  * Language server notification names.
  */
 export enum Notification {
-	DidRegisterCodeActionRequestHandler = 'stylelint/didRegisterCodeActionRequestHandler',
+	DidRegisterCodeActionRequestHandler = 'ec0lint-style/didRegisterCodeActionRequestHandler',
 	DidRegisterDocumentFormattingEditProvider = 'textDocument/didRegisterDocumentFormattingEditProvider',
-	DidResetConfiguration = 'stylelint/didResetConfiguration',
+	DidResetConfiguration = 'ec0lint-style/didResetConfiguration',
 }
 
 /**
@@ -75,9 +67,9 @@ export interface LanguageServerContext {
 	documents: TextDocuments<TextDocument>;
 
 	/**
-	 * The runner with which to run Stylelint.
+	 * The runner with which to run ec0lint-style.
 	 */
-	runner: StylelintRunner;
+	runner: Ec0lintStyleRunner;
 
 	/**
 	 * Displays the given error in the client using the language server
@@ -99,29 +91,29 @@ export interface LanguageServerContext {
 	getModule(id: string): LanguageServerModule | undefined;
 
 	/**
-	 * Lints a document using Stylelint and returns fix text edits.
+	 * Lints a document using ec0lint-style and returns fix text edits.
 	 * @param document The document to get text edits for.
 	 * @param linterOptions Options to pass to the linter. Overridden by the
 	 * language server options.
 	 */
-	getFixes(document: TextDocument, linterOptions?: stylelint.LinterOptions): Promise<TextEdit[]>;
+	getFixes(document: TextDocument, linterOptions?: Ec0lintStyle.LinterOptions): Promise<TextEdit[]>;
 
 	/**
-	 * Lints a document using Stylelint and returns diagnostics.
+	 * Lints a document using ec0lint-style and returns diagnostics.
 	 * @param document The document to lint.
 	 * @param linterOptions Options to pass to the linter. Overridden by the
 	 * language server options.
 	 */
 	lintDocument(
 		document: TextDocument,
-		linterOptions?: Partial<stylelint.LinterOptions>,
+		linterOptions?: Partial<Ec0lintStyle.LinterOptions>,
 	): Promise<LintDiagnostics | undefined>;
 
 	/**
-	 * Resolves the Stylelint package to be used for the given document.
+	 * Resolves the ec0lint-style package to be used for the given document.
 	 * @param document The document to resolve the package for.
 	 */
-	resolveStylelint(document: TextDocument): Promise<StylelintResolutionResult | undefined>;
+	resolveEc0lintStyle(document: TextDocument): Promise<Ec0lintStyleResolutionResult | undefined>;
 }
 
 /**
@@ -221,7 +213,7 @@ export type LanguageServerOptions = {
 			location: 'separateLine' | 'sameLine';
 		};
 	};
-	config?: stylelint.Config | null;
+	config?: Ec0lintStyle.Config | null;
 	configBasedir?: string;
 	configFile?: string;
 	customSyntax?: string;
@@ -231,6 +223,6 @@ export type LanguageServerOptions = {
 	reportInvalidScopeDisables?: boolean;
 	reportNeedlessDisables?: boolean;
 	snippet: string[];
-	stylelintPath?: string;
+	ec0lintStylePath?: string;
 	validate: string[];
 };

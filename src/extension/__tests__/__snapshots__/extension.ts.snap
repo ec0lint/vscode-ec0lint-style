@@ -2,7 +2,7 @@
 
 exports[`Extension entry point should create a language client 1`] = `
 Array [
-  "Stylelint",
+  "Ec0lintStyle",
   Object {
     "debug": Object {
       "module": "mock-path",
@@ -18,7 +18,7 @@ Array [
     },
   },
   Object {
-    "diagnosticCollectionName": "Stylelint",
+    "diagnosticCollectionName": "ec0lint-style",
     "documentSelector": Array [
       Object {
         "scheme": "file",
@@ -30,21 +30,6 @@ Array [
     "synchronize": Object {
       "fileEvents": undefined,
     },
-  },
-]
-`;
-
-exports[`Extension entry point with an active text editor, should send auto-fix commands to the language server 1`] = `
-Array [
-  "executeCommand",
-  Object {
-    "arguments": Array [
-      Object {
-        "uri": "file:///path/to/file.ts",
-        "version": 1,
-      },
-    ],
-    "command": "stylelint.applyAutoFix",
   },
 ]
 `;

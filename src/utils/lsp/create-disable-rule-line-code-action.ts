@@ -22,7 +22,7 @@ export function createDisableRuleLineCodeAction(
 			.add(
 				LSP.TextEdit.insert(
 					LSP.Position.create(range.start.line, LSP.uinteger.MAX_VALUE),
-					` /* stylelint-disable-line ${code} */`,
+					` /* ec0lint-style-disable-line ${code} */`,
 				),
 			);
 	} else {
@@ -39,7 +39,7 @@ export function createDisableRuleLineCodeAction(
 			.add(
 				LSP.TextEdit.insert(
 					LSP.Position.create(range.start.line, 0),
-					`${indentation}/* stylelint-disable-next-line ${code} */${os.EOL}`,
+					`${indentation}/* ec0lint-style-disable-next-line ${code} */${os.EOL}`,
 				),
 			);
 	}

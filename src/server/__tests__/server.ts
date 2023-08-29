@@ -1,6 +1,6 @@
 jest.mock('vscode-languageserver/node');
 jest.mock('../../utils/lsp');
-jest.mock('../../utils/stylelint');
+jest.mock('../../utils/ec0lint-style');
 jest.mock('../../utils/documents');
 jest.mock('../../utils/packages');
 
@@ -14,10 +14,10 @@ import type { TextDocument, TextEdit } from 'vscode-languageserver-textdocument'
 import { TextDocuments } from 'vscode-languageserver/node';
 import * as LSP from 'vscode-languageserver-protocol';
 import { displayError, NotificationManager, CommandManager } from '../../utils/lsp';
-import { StylelintRunner } from '../../utils/stylelint';
+import { Ec0lintRunner } from '../../utils/ec0lint-style';
 import { getFixes } from '../../utils/documents';
-import { StylelintResolver } from '../../utils/packages';
-import { StylelintLanguageServer } from '../server';
+import { Ec0lintResolver } from '../../utils/packages';
+import { Ec0lintStyleLanguageServer } from '../server';
 import {
 	LanguageServerContext,
 	LanguageServerModule,
@@ -29,9 +29,9 @@ import {
 const mockDisplayError = displayError as jest.MockedFunction<typeof displayError>;
 const mockNotificationManager = NotificationManager as jest.MockedClass<typeof NotificationManager>;
 const mockCommandManager = CommandManager as jest.MockedClass<typeof CommandManager>;
-const mockRunner = StylelintRunner as jest.Mock<StylelintRunner>;
+const mockRunner = Ec0lintRunner as jest.Mock<Ec0lintRunner>;
 const mockGetFixes = getFixes as jest.MockedFunction<typeof getFixes>;
-const mockResolver = StylelintResolver as jest.Mock<StylelintResolver>;
+const mockResolver = Ec0lintResolver as jest.Mock<Ec0lintResolver>;
 const mockTextDocuments = TextDocuments as jest.Mock<TextDocuments<TextDocument>>;
 
 const mockConnection = serverMocks.getConnection();
@@ -42,7 +42,7 @@ const mockCommands = serverMocks.getCommandManager();
 mockNotificationManager.mockImplementation(() => mockNotifications.__typed());
 mockCommandManager.mockImplementation(() => mockCommands.__typed());
 
-describe('StylelintLanguageServer', () => {
+describe('Ec0lintLanguageServer', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 
@@ -53,15 +53,15 @@ describe('StylelintLanguageServer', () => {
 	});
 
 	test('should be constructable', () => {
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 		});
 
-		expect(server).toBeInstanceOf(StylelintLanguageServer);
+		expect(server).toBeInstanceOf(Ec0lintStyleLanguageServer);
 	});
 
 	test('should tag its own logger', () => {
-		new StylelintLanguageServer({
+		new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 		});
@@ -81,7 +81,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		new StylelintLanguageServer({
+		new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -103,7 +103,7 @@ describe('StylelintLanguageServer', () => {
 		}
 
 		expect(() => {
-			new StylelintLanguageServer({
+			new Ec0lintStyleLanguageServer({
 				connection: mockConnection,
 				logger: mockLogger,
 				modules: [TestModule, TestModule2],
@@ -121,7 +121,7 @@ describe('StylelintLanguageServer', () => {
 		}
 
 		expect(() => {
-			new StylelintLanguageServer({
+			new Ec0lintStyleLanguageServer({
 				connection: mockConnection,
 				logger: mockLogger,
 				modules: [TestModule],
@@ -135,7 +135,7 @@ describe('StylelintLanguageServer', () => {
 		}
 
 		expect(() => {
-			new StylelintLanguageServer({
+			new Ec0lintStyleLanguageServer({
 				connection: mockConnection,
 				logger: mockLogger,
 				modules: [TestModule as unknown as LanguageServerModuleConstructor],
@@ -149,7 +149,7 @@ describe('StylelintLanguageServer', () => {
 		}
 
 		expect(() => {
-			new StylelintLanguageServer({
+			new Ec0lintStyleLanguageServer({
 				connection: mockConnection,
 				logger: mockLogger,
 				modules: [TestModule as unknown as LanguageServerModuleConstructor],
@@ -158,7 +158,7 @@ describe('StylelintLanguageServer', () => {
 	});
 
 	test('should start successfully', async () => {
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 		});
@@ -196,7 +196,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModuleA, TestModuleB],
@@ -216,7 +216,7 @@ describe('StylelintLanguageServer', () => {
 	});
 
 	test('if workspace/configuration is not supported, should not register DidChangeConfigurationNotification', () => {
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 		});
@@ -247,7 +247,7 @@ describe('StylelintLanguageServer', () => {
 	});
 
 	test('if workspace/configuration is supported, should register DidChangeConfigurationNotification', () => {
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 		});
@@ -276,7 +276,7 @@ describe('StylelintLanguageServer', () => {
 		expect(mockLogger.debug).toHaveBeenCalledWith('Registering DidChangeConfigurationNotification');
 		expect(mockConnection.client.register).toHaveBeenCalledWith(
 			LSP.DidChangeConfigurationNotification.type,
-			{ section: 'stylelint' },
+			{ section: 'ec0lint-style' },
 		);
 	});
 
@@ -291,7 +291,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -335,7 +335,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModuleA, TestModuleB],
@@ -366,7 +366,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -405,7 +405,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -429,7 +429,7 @@ describe('StylelintLanguageServer', () => {
 
 		onDidChangeConfigurationHandler({
 			settings: {
-				stylelint: {
+				ec0lint: {
 					validate: ['css'],
 				},
 			},
@@ -445,7 +445,7 @@ describe('StylelintLanguageServer', () => {
 	test('when workspace/configuration is available, context.getOptions should return resource-scoped options', async () => {
 		mockConnection.workspace.getConfiguration.mockImplementation(
 			({ scopeUri, section }: LSP.ConfigurationItem) => {
-				if (section !== 'stylelint') {
+				if (section !== 'ec0lint') {
 					return {};
 				}
 
@@ -465,7 +465,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -490,11 +490,11 @@ describe('StylelintLanguageServer', () => {
 
 		expect(mockConnection.workspace.getConfiguration).toHaveBeenCalledWith({
 			scopeUri: 'uri',
-			section: 'stylelint',
+			section: 'ec0lint-style',
 		});
 		expect(mockConnection.workspace.getConfiguration).toHaveBeenCalledWith({
 			scopeUri: 'uri2',
-			section: 'stylelint',
+			section: 'ec0lint-style',
 		});
 		expect(options1).toMatchSnapshot();
 		expect(options2).toMatchSnapshot();
@@ -503,7 +503,7 @@ describe('StylelintLanguageServer', () => {
 	test('when workspace/configuration is available, context.getOptions should cache resource-scoped options', async () => {
 		mockConnection.workspace.getConfiguration.mockImplementation(
 			({ scopeUri, section }: LSP.ConfigurationItem) => {
-				if (section !== 'stylelint') {
+				if (section !== 'ec0lint') {
 					return {};
 				}
 
@@ -523,7 +523,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -556,7 +556,7 @@ describe('StylelintLanguageServer', () => {
 	test('when workspace/configuration is available, on documents.onDidClose, should clear cached options', async () => {
 		mockConnection.workspace.getConfiguration.mockImplementation(
 			({ scopeUri, section }: LSP.ConfigurationItem) => {
-				if (section !== 'stylelint') {
+				if (section !== 'ec0lint') {
 					return {};
 				}
 
@@ -576,7 +576,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -626,7 +626,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -657,7 +657,7 @@ describe('StylelintLanguageServer', () => {
 
 		onDidChangeConfigurationHandler({
 			settings: {
-				stylelint: {
+				ec0lint: {
 					validate: ['css'],
 				},
 			},
@@ -682,7 +682,7 @@ describe('StylelintLanguageServer', () => {
 			onDidChangeConfiguration = moduleHandler;
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -708,7 +708,7 @@ describe('StylelintLanguageServer', () => {
 
 		onDidChangeConfigurationHandler({
 			settings: {
-				stylelint: {
+				ec0lint: {
 					validate: ['css'],
 				},
 			},
@@ -724,7 +724,7 @@ describe('StylelintLanguageServer', () => {
 
 		const mockRunnerImpl = {
 			lintDocument: jest.fn(async () => ['test']),
-		} as unknown as jest.Mocked<StylelintRunner>;
+		} as unknown as jest.Mocked<Ec0lintRunner>;
 
 		mockRunner.mockImplementation(() => mockRunnerImpl);
 
@@ -744,7 +744,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			modules: [TestModule],
 		});
@@ -766,7 +766,7 @@ describe('StylelintLanguageServer', () => {
 	});
 
 	test('when workspace/configuration is available, onDidChangeConfiguration should send the DidResetConfiguration notification', async () => {
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 		});
@@ -791,7 +791,7 @@ describe('StylelintLanguageServer', () => {
 
 		onDidChangeConfigurationHandler({
 			settings: {
-				stylelint: {
+				ec0lint: {
 					validate: ['css'],
 				},
 			},
@@ -812,7 +812,7 @@ describe('StylelintLanguageServer', () => {
 					lintDocument: async () => {
 						throw error;
 					},
-				} as unknown as StylelintRunner),
+				} as unknown as Ec0lintRunner),
 		);
 
 		const document = { uri: 'file:///test.css' } as TextDocument;
@@ -830,7 +830,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -858,7 +858,7 @@ describe('StylelintLanguageServer', () => {
 		let withOptions: Promise<unknown> | undefined;
 		let withoutOptions: Promise<unknown> | undefined;
 
-		mockRunner.mockImplementation(() => ({} as unknown as StylelintRunner));
+		mockRunner.mockImplementation(() => ({} as unknown as Ec0lintRunner));
 		mockGetFixes.mockImplementation(async () => ['test'] as unknown as TextEdit[]);
 
 		const document = { uri: 'file:///test.css' } as TextDocument;
@@ -877,7 +877,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			modules: [TestModule],
 		});
@@ -920,7 +920,7 @@ describe('StylelintLanguageServer', () => {
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -944,17 +944,17 @@ describe('StylelintLanguageServer', () => {
 		});
 	});
 
-	test('should allow modules to resolve the Stylelint package for a given document using context.resolveStylelintPackage', async () => {
+	test('should allow modules to resolve the ec0lint package for a given document using context.resolveEc0lintPackage', async () => {
 		let promise: Promise<unknown> | undefined;
 
 		mockResolver.mockImplementation(
 			() =>
 				({
 					resolve: async () => ({
-						stylelint: { fake: 'package' },
+						ec0lint: { fake: 'package' },
 						resolvedPath: 'fake/path',
 					}),
-				} as unknown as StylelintResolver),
+				} as unknown as Ec0lintResolver),
 		);
 
 		const document = { uri: 'file:///test.css' } as TextDocument;
@@ -968,11 +968,11 @@ describe('StylelintLanguageServer', () => {
 			}
 
 			onInitialize() {
-				promise = this.context.resolveStylelint(document);
+				promise = this.context.resolveEc0lintStyle(document);
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			modules: [TestModule],
 		});
@@ -988,12 +988,12 @@ describe('StylelintLanguageServer', () => {
 		);
 
 		expect(await promise).toStrictEqual({
-			stylelint: { fake: 'package' },
+			ec0lint: { fake: 'package' },
 			resolvedPath: 'fake/path',
 		});
 	});
 
-	test('should display and log errors thrown when resolving the Stylelint package', async () => {
+	test('should display and log errors thrown when resolving the ec0lint package', async () => {
 		const error = new Error('test');
 		let promise: Promise<unknown> | undefined;
 
@@ -1003,7 +1003,7 @@ describe('StylelintLanguageServer', () => {
 					resolve: async () => {
 						throw error;
 					},
-				} as unknown as StylelintResolver),
+				} as unknown as Ec0lintResolver),
 		);
 
 		const document = { uri: 'file:///test.css' } as TextDocument;
@@ -1017,11 +1017,11 @@ describe('StylelintLanguageServer', () => {
 			}
 
 			onInitialize() {
-				promise = this.context.resolveStylelint(document);
+				promise = this.context.resolveEc0lintStyle(document);
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -1039,13 +1039,13 @@ describe('StylelintLanguageServer', () => {
 
 		expect(await promise).toBeUndefined();
 		expect(mockDisplayError).toHaveBeenCalledWith(mockConnection, error);
-		expect(mockLogger.error).toHaveBeenCalledWith('Error resolving Stylelint', {
+		expect(mockLogger.error).toHaveBeenCalledWith('Error resolving ec0lint-style', {
 			uri: 'file:///test.css',
 			error,
 		});
 	});
 
-	test('should log when Stylelint cannot be resolved', async () => {
+	test('should log when ec0lint cannot be resolved', async () => {
 		let promise: Promise<unknown> | undefined;
 
 		mockResolver.mockImplementation(
@@ -1054,7 +1054,7 @@ describe('StylelintLanguageServer', () => {
 					resolve: async () => {
 						return undefined;
 					},
-				} as unknown as StylelintResolver),
+				} as unknown as Ec0lintResolver),
 		);
 
 		const document = { uri: 'file:///test.css' } as TextDocument;
@@ -1068,11 +1068,11 @@ describe('StylelintLanguageServer', () => {
 			}
 
 			onInitialize() {
-				promise = this.context.resolveStylelint(document);
+				promise = this.context.resolveEc0lintStyle(document);
 			}
 		}
 
-		const server = new StylelintLanguageServer({
+		const server = new Ec0lintStyleLanguageServer({
 			connection: mockConnection,
 			logger: mockLogger,
 			modules: [TestModule],
@@ -1089,7 +1089,7 @@ describe('StylelintLanguageServer', () => {
 		);
 
 		expect(await promise).toBeUndefined();
-		expect(mockLogger.warn).toHaveBeenCalledWith('Failed to resolve Stylelint', {
+		expect(mockLogger.warn).toHaveBeenCalledWith('Failed to resolve ec0lint-style', {
 			uri: 'file:///test.css',
 		});
 	});

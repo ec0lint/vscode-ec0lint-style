@@ -3,19 +3,19 @@ import { URI } from 'vscode-uri';
 import type { Connection } from 'vscode-languageserver';
 import type { TextDocument } from 'vscode-languageserver-textdocument';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type winston from 'winston';
 
-import { StylelintResolver } from '../packages';
+import { Ec0lintResolver   } from '../packages';
 import { getWorkspaceFolder } from '../documents';
 import { processLinterResult } from './process-linter-result';
-import { buildStylelintOptions } from './build-stylelint-options';
+import { buildEc0lintStyleOptions } from './build-ec0lint-style-options';
 import type { LintDiagnostics, RunnerOptions } from './types';
 
 /**
- * Runs Stylelint in VS Code.
+ * Runs Ec0lint in VS Code.
  */
-export class StylelintRunner {
+export class Ec0lintRunner {
 	/**
 	 * The language server connection.
 	 */
@@ -27,18 +27,18 @@ export class StylelintRunner {
 	#logger: winston.Logger | undefined;
 
 	/**
-	 * The Stylelint resolver.
+	 * The Ec0lint resolver.
 	 */
-	#stylelintResolver: StylelintResolver;
+	#ec0lintResolver: Ec0lintResolver;
 
-	constructor(connection?: Connection, logger?: winston.Logger, resolver?: StylelintResolver) {
+	constructor(connection?: Connection, logger?: winston.Logger, resolver?: Ec0lintResolver) {
 		this.#connection = connection;
 		this.#logger = logger;
-		this.#stylelintResolver = resolver ?? new StylelintResolver(connection, logger);
+		this.#ec0lintResolver = resolver ?? new Ec0lintResolver(connection, logger);
 	}
 
 	/**
-	 * Lints the given document using Stylelint. The linting result is then
+	 * Lints the given document using Ec0lint. The linting result is then
 	 * converted to LSP diagnostics and returned.
 	 * @param document
 	 * @param linterOptions
@@ -46,16 +46,16 @@ export class StylelintRunner {
 	 */
 	async lintDocument(
 		document: TextDocument,
-		linterOptions: stylelint.LinterOptions = {},
+		linterOptions: Ec0lintStyle.LinterOptions = {},
 		runnerOptions: RunnerOptions = {},
 	): Promise<LintDiagnostics> {
 		const workspaceFolder =
 			this.#connection && (await getWorkspaceFolder(this.#connection, document));
 
-		const result = await this.#stylelintResolver.resolve(runnerOptions, document);
+		const result = await this.#ec0lintResolver.resolve(runnerOptions, document);
 
 		if (!result) {
-			this.#logger?.info('No Stylelint found with which to lint document', {
+			this.#logger?.info('No Ec0lint found with which to lint document', {
 				uri: document.uri,
 				options: runnerOptions,
 			});
@@ -63,11 +63,11 @@ export class StylelintRunner {
 			return { diagnostics: [] };
 		}
 
-		const { stylelint } = result;
+		const { ec0lint } = result;
 
 		const { fsPath } = URI.parse(document.uri);
 
-		// Workaround for Stylelint treating paths as case-sensitive on Windows
+		// Workaround for ec0lint-style treating paths as case-sensitive on Windows
 		// If the drive letter is lowercase, we need to convert it to uppercase
 		// See https://github.com/stylelint/stylelint/issues/5594
 		// TODO: Remove once fixed upstream
@@ -76,8 +76,8 @@ export class StylelintRunner {
 				? fsPath.replace(/^[a-z]:/, (match) => match.toUpperCase())
 				: fsPath;
 
-		const options: stylelint.LinterOptions = {
-			...(await buildStylelintOptions(document.uri, workspaceFolder, linterOptions, runnerOptions)),
+		const options: Ec0lintStyle.LinterOptions = {
+			...(await buildEc0lintStyleOptions(document.uri, workspaceFolder, linterOptions, runnerOptions)),
 			code: document.getText(),
 			formatter: () => '',
 		};
@@ -89,21 +89,21 @@ export class StylelintRunner {
 		}
 
 		if (this.#logger?.isDebugEnabled()) {
-			this.#logger?.debug('Running Stylelint', { options: { ...options, code: '...' } });
+			this.#logger?.debug('Running Ec0lint', { options: { ...options, code: '...' } });
 		}
 
 		try {
-			return processLinterResult(stylelint, await stylelint.lint(options));
+			return processLinterResult(ec0lint, await ec0lint.lint(options));
 		} catch (err) {
 			if (
 				err instanceof Error &&
 				(err.message.startsWith('No configuration provided for') ||
 					err.message.includes('No rules found within configuration'))
 			) {
-				// Check only CSS syntax errors without applying any Stylelint rules
+				// Check only CSS syntax errors without applying any ec0lint-style rules
 				return processLinterResult(
-					stylelint,
-					await stylelint.lint({ ...options, config: { rules: {} } }),
+					ec0lint,
+					await ec0lint.lint({ ...options, config: { rules: {} } }),
 				);
 			}
 

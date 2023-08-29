@@ -17,7 +17,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "at-rule-no-unknown",
@@ -33,7 +33,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
     Object {
       "code": "alpha-value-notation",
@@ -49,7 +49,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
 }
@@ -72,7 +72,7 @@ Object {
         },
       },
       "severity": 1,
-      "source": "Stylelint",
+      "source": "ec0lint-style",
     },
   ],
   "output": "Output",

@@ -1,33 +1,33 @@
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import { processLinterResult } from '../process-linter-result';
 
-const mockStylelint = {
+const mockEc0lint = {
 	rules: {
 		'unit-no-unknown': {},
 		'at-rule-no-unknown': {},
 	},
-} as unknown as stylelint.PublicApi;
+} as unknown as Ec0lintStyle.PublicApi;
 
 const createMockResult = (
-	mockResults: Partial<stylelint.LintResult>[],
+	mockResults: Partial<Ec0lintStyle.LintResult>[],
 	output?: string,
-): stylelint.LinterResult => {
+): Ec0lintStyle.LinterResult => {
 	const results = mockResults.map((result) => ({
 		invalidOptionWarnings: result.invalidOptionWarnings ?? [],
 		warnings: result.warnings ?? [],
 		ignored: result.ignored ?? false,
 	}));
 
-	return (output ? { results, output } : { results }) as stylelint.LinterResult;
+	return (output ? { results, output } : { results }) as Ec0lintStyle.LinterResult;
 };
 
 const createMockWarning = (
 	rule: string,
 	text?: string,
-	severity?: stylelint.Severity,
+	severity?: Ec0lintStyle.Severity,
 	line?: number,
 	column?: number,
-): stylelint.Warning => ({
+): Ec0lintStyle.Warning => ({
 	rule,
 	text: text ?? rule,
 	severity: severity ?? 'error',
@@ -38,7 +38,7 @@ const createMockWarning = (
 describe('processLinterResult', () => {
 	test('should return diagnostics for each warning', () => {
 		const result = processLinterResult(
-			mockStylelint,
+			mockEc0lint,
 			createMockResult([
 				{
 					warnings: [
@@ -55,7 +55,7 @@ describe('processLinterResult', () => {
 
 	test('should return output if given', () => {
 		const result = processLinterResult(
-			mockStylelint,
+			mockEc0lint,
 			createMockResult(
 				[
 					{
@@ -70,14 +70,14 @@ describe('processLinterResult', () => {
 	});
 
 	test('should return no diagnostics if no results are given', () => {
-		const result = processLinterResult(mockStylelint, createMockResult([]));
+		const result = processLinterResult(mockEc0lint, createMockResult([]));
 
 		expect(result).toEqual({ diagnostics: [] });
 	});
 
 	test('should return no diagnostics if results are ignored', () => {
 		const result = processLinterResult(
-			mockStylelint,
+			mockEc0lint,
 			createMockResult([
 				{
 					warnings: [createMockWarning('unit-no-unknown')],
@@ -92,7 +92,7 @@ describe('processLinterResult', () => {
 	test('should throw if invalid option results are given', () => {
 		expect(() =>
 			processLinterResult(
-				mockStylelint,
+				mockEc0lint,
 				createMockResult([
 					{
 						invalidOptionWarnings: [{ text: 'Warning 1' }, { text: 'Warning 2' }],

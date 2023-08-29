@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StylelintLanguageServer should accept server modules 1`] = `
+exports[`Ec0lintLanguageServer should accept server modules 1`] = `
 Object {
   "context": Object {
     "commands": Object {
@@ -133,8 +133,8 @@ Object {
       "__typed": [Function],
       "on": [MockFunction],
     },
-    "resolveStylelint": [Function],
-    "runner": StylelintRunner {
+    "resolveEc0lintStyle": [Function],
+    "runner": Ec0lintRunner {
       "lintDocument": [MockFunction],
     },
   },
@@ -142,7 +142,7 @@ Object {
 }
 `;
 
-exports[`StylelintLanguageServer should allow modules to get fixes for documents using context.getFixes 1`] = `
+exports[`Ec0lintLanguageServer should allow modules to get fixes for documents using context.getFixes 1`] = `
 Array [
   Array [
     Object {},
@@ -162,6 +162,7 @@ Array [
       "configBasedir": "",
       "configFile": "",
       "customSyntax": "",
+      "ec0lintStylePath": "",
       "ignoreDisables": false,
       "packageManager": "npm",
       "reportDescriptionlessDisables": false,
@@ -171,7 +172,6 @@ Array [
         "css",
         "postcss",
       ],
-      "stylelintPath": "",
       "validate": Array [
         "css",
         "postcss",
@@ -194,6 +194,7 @@ Array [
       "configBasedir": "",
       "configFile": "",
       "customSyntax": "",
+      "ec0lintStylePath": "",
       "ignoreDisables": false,
       "packageManager": "npm",
       "reportDescriptionlessDisables": false,
@@ -203,7 +204,6 @@ Array [
         "css",
         "postcss",
       ],
-      "stylelintPath": "",
       "validate": Array [
         "css",
         "postcss",
@@ -213,7 +213,7 @@ Array [
 ]
 `;
 
-exports[`StylelintLanguageServer should allow modules to lint documents using context.lintDocument 1`] = `
+exports[`Ec0lintLanguageServer should allow modules to lint documents using context.lintDocument 1`] = `
 Array [
   Array [
     Object {
@@ -232,6 +232,7 @@ Array [
       "configBasedir": "",
       "configFile": "",
       "customSyntax": "",
+      "ec0lintStylePath": "",
       "ignoreDisables": false,
       "packageManager": "npm",
       "reportDescriptionlessDisables": false,
@@ -241,7 +242,6 @@ Array [
         "css",
         "postcss",
       ],
-      "stylelintPath": "",
       "validate": Array [
         "css",
         "postcss",
@@ -263,6 +263,7 @@ Array [
       "configBasedir": "",
       "configFile": "",
       "customSyntax": "",
+      "ec0lintStylePath": "",
       "ignoreDisables": false,
       "packageManager": "npm",
       "reportDescriptionlessDisables": false,
@@ -272,7 +273,6 @@ Array [
         "css",
         "postcss",
       ],
-      "stylelintPath": "",
       "validate": Array [
         "css",
         "postcss",
@@ -282,7 +282,7 @@ Array [
 ]
 `;
 
-exports[`StylelintLanguageServer should combine initialization results from modules 1`] = `
+exports[`Ec0lintLanguageServer should combine initialization results from modules 1`] = `
 Object {
   "capabilities": Object {
     "callHierarchyProvider": true,
@@ -300,15 +300,15 @@ Object {
 }
 `;
 
-exports[`StylelintLanguageServer should not accept modules with a non-string ID 1`] = `"Module IDs must be strings"`;
+exports[`Ec0lintLanguageServer should not accept modules with a non-string ID 1`] = `"Module IDs must be strings"`;
 
-exports[`StylelintLanguageServer should not accept modules with duplicate IDs 1`] = `"Module with ID \\"test-module\\" already registered"`;
+exports[`Ec0lintLanguageServer should not accept modules with duplicate IDs 1`] = `"Module with ID \\"test-module\\" already registered"`;
 
-exports[`StylelintLanguageServer should not accept modules without an ID 1`] = `"Modules must have an ID"`;
+exports[`Ec0lintLanguageServer should not accept modules without an ID 1`] = `"Modules must have an ID"`;
 
-exports[`StylelintLanguageServer should prevent modules from modifying context properties 1`] = `"Cannot set read-only property"`;
+exports[`Ec0lintLanguageServer should prevent modules from modifying context properties 1`] = `"Cannot set read-only property"`;
 
-exports[`StylelintLanguageServer when workspace/configuration is available, context.getOptions should return resource-scoped options 1`] = `
+exports[`Ec0lintLanguageServer when workspace/configuration is available, context.getOptions should return resource-scoped options 1`] = `
 Object {
   "codeAction": Object {
     "disableRuleComment": Object {
@@ -319,61 +319,7 @@ Object {
   "configBasedir": "",
   "configFile": "",
   "customSyntax": "",
-  "ignoreDisables": false,
-  "packageManager": "yarn",
-  "reportDescriptionlessDisables": false,
-  "reportInvalidScopeDisables": false,
-  "reportNeedlessDisables": false,
-  "snippet": Array [
-    "css",
-    "postcss",
-  ],
-  "stylelintPath": "",
-  "validate": Array [
-    "css",
-    "postcss",
-  ],
-}
-`;
-
-exports[`StylelintLanguageServer when workspace/configuration is available, context.getOptions should return resource-scoped options 2`] = `
-Object {
-  "codeAction": Object {
-    "disableRuleComment": Object {
-      "location": "separateLine",
-    },
-  },
-  "config": null,
-  "configBasedir": "",
-  "configFile": "",
-  "customSyntax": "",
-  "ignoreDisables": false,
-  "packageManager": "npm",
-  "reportDescriptionlessDisables": false,
-  "reportInvalidScopeDisables": false,
-  "reportNeedlessDisables": false,
-  "snippet": Array [
-    "scss",
-  ],
-  "stylelintPath": "",
-  "validate": Array [
-    "css",
-    "postcss",
-  ],
-}
-`;
-
-exports[`StylelintLanguageServer when workspace/configuration is not available, context.getOptions should gracefully handle missing section 1`] = `
-Object {
-  "codeAction": Object {
-    "disableRuleComment": Object {
-      "location": "separateLine",
-    },
-  },
-  "config": null,
-  "configBasedir": "",
-  "configFile": "",
-  "customSyntax": "",
+  "ec0lintStylePath": "",
   "ignoreDisables": false,
   "packageManager": "npm",
   "reportDescriptionlessDisables": false,
@@ -383,7 +329,6 @@ Object {
     "css",
     "postcss",
   ],
-  "stylelintPath": "",
   "validate": Array [
     "css",
     "postcss",
@@ -391,7 +336,7 @@ Object {
 }
 `;
 
-exports[`StylelintLanguageServer when workspace/configuration is not available, context.getOptions should gracefully handle missing section 2`] = `
+exports[`Ec0lintLanguageServer when workspace/configuration is available, context.getOptions should return resource-scoped options 2`] = `
 Object {
   "codeAction": Object {
     "disableRuleComment": Object {
@@ -402,6 +347,7 @@ Object {
   "configBasedir": "",
   "configFile": "",
   "customSyntax": "",
+  "ec0lintStylePath": "",
   "ignoreDisables": false,
   "packageManager": "npm",
   "reportDescriptionlessDisables": false,
@@ -411,14 +357,14 @@ Object {
     "css",
     "postcss",
   ],
-  "stylelintPath": "",
   "validate": Array [
     "css",
+    "postcss",
   ],
 }
 `;
 
-exports[`StylelintLanguageServer when workspace/configuration is not available, context.getOptions should return global options 1`] = `
+exports[`Ec0lintLanguageServer when workspace/configuration is not available, context.getOptions should gracefully handle missing section 1`] = `
 Object {
   "codeAction": Object {
     "disableRuleComment": Object {
@@ -429,6 +375,7 @@ Object {
   "configBasedir": "",
   "configFile": "",
   "customSyntax": "",
+  "ec0lintStylePath": "",
   "ignoreDisables": false,
   "packageManager": "npm",
   "reportDescriptionlessDisables": false,
@@ -438,10 +385,207 @@ Object {
     "css",
     "postcss",
   ],
-  "stylelintPath": "",
   "validate": Array [
     "css",
     "postcss",
   ],
+}
+`;
+
+exports[`Ec0lintLanguageServer when workspace/configuration is not available, context.getOptions should gracefully handle missing section 2`] = `
+Object {
+  "codeAction": Object {
+    "disableRuleComment": Object {
+      "location": "separateLine",
+    },
+  },
+  "config": null,
+  "configBasedir": "",
+  "configFile": "",
+  "customSyntax": "",
+  "ec0lintStylePath": "",
+  "ignoreDisables": false,
+  "packageManager": "npm",
+  "reportDescriptionlessDisables": false,
+  "reportInvalidScopeDisables": false,
+  "reportNeedlessDisables": false,
+  "snippet": Array [
+    "css",
+    "postcss",
+  ],
+  "validate": Array [
+    "css",
+    "postcss",
+  ],
+}
+`;
+
+exports[`Ec0lintLanguageServer when workspace/configuration is not available, context.getOptions should return global options 1`] = `
+Object {
+  "codeAction": Object {
+    "disableRuleComment": Object {
+      "location": "separateLine",
+    },
+  },
+  "config": null,
+  "configBasedir": "",
+  "configFile": "",
+  "customSyntax": "",
+  "ec0lintStylePath": "",
+  "ignoreDisables": false,
+  "packageManager": "npm",
+  "reportDescriptionlessDisables": false,
+  "reportInvalidScopeDisables": false,
+  "reportNeedlessDisables": false,
+  "snippet": Array [
+    "css",
+    "postcss",
+  ],
+  "validate": Array [
+    "css",
+    "postcss",
+  ],
+}
+`;
+
+exports[`ec0lintLanguageServer should accept server modules 1`] = `
+Object {
+  "context": Object {
+    "commands": Object {
+      "__typed": [Function],
+      "on": [MockFunction],
+      "register": [MockFunction],
+    },
+    "connection": Object {
+      "__typed": [Function],
+      "client": Object {
+        "connection": [Circular],
+        "register": [MockFunction],
+      },
+      "console": Object {
+        "connection": [Circular],
+        "error": [MockFunction],
+        "info": [MockFunction],
+        "log": [MockFunction],
+        "warn": [MockFunction],
+      },
+      "dispose": [MockFunction],
+      "languages": Object {
+        "attachPartialResultProgress": [MockFunction],
+        "attachWorkDoneProgress": [MockFunction],
+        "callHierarchy": Object {
+          "onIncomingCalls": [MockFunction],
+          "onOutgoingCalls": [MockFunction],
+          "onPrepare": [MockFunction],
+        },
+        "connection": [Circular],
+        "moniker": Object {
+          "on": [MockFunction],
+        },
+        "onLinkedEditingRange": [MockFunction],
+        "semanticTokens": Object {
+          "on": [MockFunction],
+          "onDelta": [MockFunction],
+          "onRange": [MockFunction],
+        },
+      },
+      "listen": [MockFunction],
+      "onCodeAction": [MockFunction],
+      "onCodeActionResolve": [MockFunction],
+      "onCodeLens": [MockFunction],
+      "onCodeLensResolve": [MockFunction],
+      "onColorPresentation": [MockFunction],
+      "onCompletion": [MockFunction],
+      "onCompletionResolve": [MockFunction],
+      "onDeclaration": [MockFunction],
+      "onDefinition": [MockFunction],
+      "onDidChangeConfiguration": [MockFunction],
+      "onDidChangeTextDocument": [MockFunction],
+      "onDidChangeWatchedFiles": [MockFunction],
+      "onDidCloseTextDocument": [MockFunction],
+      "onDidOpenTextDocument": [MockFunction],
+      "onDidSaveTextDocument": [MockFunction],
+      "onDocumentColor": [MockFunction],
+      "onDocumentFormatting": [MockFunction],
+      "onDocumentHighlight": [MockFunction],
+      "onDocumentLinkResolve": [MockFunction],
+      "onDocumentLinks": [MockFunction],
+      "onDocumentOnTypeFormatting": [MockFunction],
+      "onDocumentRangeFormatting": [MockFunction],
+      "onDocumentSymbol": [MockFunction],
+      "onExecuteCommand": [MockFunction],
+      "onExit": [MockFunction],
+      "onFoldingRanges": [MockFunction],
+      "onHover": [MockFunction],
+      "onImplementation": [MockFunction],
+      "onInitialize": [MockFunction],
+      "onInitialized": [MockFunction],
+      "onNotification": [MockFunction],
+      "onPrepareRename": [MockFunction],
+      "onProgress": [MockFunction],
+      "onReferences": [MockFunction],
+      "onRenameRequest": [MockFunction],
+      "onRequest": [MockFunction],
+      "onSelectionRanges": [MockFunction],
+      "onShutdown": [MockFunction],
+      "onSignatureHelp": [MockFunction],
+      "onTypeDefinition": [MockFunction],
+      "onWillSaveTextDocument": [MockFunction],
+      "onWillSaveTextDocumentWaitUntil": [MockFunction],
+      "onWorkspaceSymbol": [MockFunction],
+      "sendDiagnostics": [MockFunction],
+      "sendNotification": [MockFunction],
+      "sendProgress": [MockFunction],
+      "sendRequest": [MockFunction],
+      "telemetry": Object {
+        "connection": [Circular],
+        "logEvent": [MockFunction],
+      },
+      "tracer": Object {
+        "connection": [Circular],
+        "log": [MockFunction],
+      },
+      "window": Object {
+        "attachWorkDoneProgress": [MockFunction],
+        "connection": [Circular],
+        "createWorkDoneProgress": [MockFunction],
+        "showDocument": [MockFunction],
+        "showErrorMessage": [MockFunction],
+        "showInformationMessage": [MockFunction],
+        "showWarningMessage": [MockFunction],
+      },
+      "workspace": Object {
+        "applyEdit": [MockFunction],
+        "connection": [Circular],
+        "getConfiguration": [MockFunction],
+        "getWorkspaceFolders": [MockFunction],
+        "onDidChangeWorkspaceFolders": [MockFunction],
+        "onDidCreateFiles": [MockFunction],
+        "onDidDeleteFiles": [MockFunction],
+        "onDidRenameFiles": [MockFunction],
+        "onWillCreateFiles": [MockFunction],
+        "onWillDeleteFiles": [MockFunction],
+        "onWillRenameFiles": [MockFunction],
+      },
+    },
+    "displayError": [Function],
+    "documents": Object {
+      "listen": [MockFunction],
+      "onDidClose": [MockFunction],
+    },
+    "getFixes": [Function],
+    "getModule": [Function],
+    "getOptions": [Function],
+    "lintDocument": [Function],
+    "notifications": Object {
+      "__typed": [Function],
+      "on": [MockFunction],
+    },
+    "resolveEc0lint": [Function],
+    "runner": Ec0lintRunner {
+      "lintDocument": [MockFunction],
+    },
+  },
+  "logger": [MockFunction],
 }
 `;

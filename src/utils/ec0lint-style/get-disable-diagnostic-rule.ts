@@ -4,7 +4,7 @@ import { DisableReportRuleNames } from './types';
 /**
  * Gets the rule name to which a disable diagnostic applies. Returns `undefined`
  * if the diagnostic is not a disable diagnostic.
- * @param diagnostic The diagnostic corresponding to the Stylelint warning.
+ * @param diagnostic The diagnostic corresponding to the ec0lint-style warning.
  */
 export function getDisableDiagnosticRule(diagnostic: LSP.Diagnostic): string | undefined {
 	switch (diagnostic.code) {

@@ -1,13 +1,13 @@
-/* stylelint-disable-next-line foo */
+/* ec0lint-style-disable-next-line foo */
 
-/* stylelint-disable-line foo */
+/* ec0lint-style-disable-line foo */
 
-/* stylelint-disable foo */
-/* stylelint-enable foo */
+/* ec0lint-style-disable foo */
+/* ec0lint-style-enable foo */
 
-/* stylelint-disable-next-line indentation */
+/* ec0lint-style-disable-next-line indentation */
 
-/* stylelint-disable-line indentation */
+/* ec0lint-style-disable-line indentation */
 
-/* stylelint-disable indentation */
-/* stylelint-enable indentation */
+/* ec0lint-style-disable indentation */
+/* ec0lint-style-enable indentation */

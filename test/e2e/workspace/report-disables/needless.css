@@ -1,21 +1,21 @@
 /* prettier-ignore */
 .foo {
-  /* stylelint-disable-next-line indentation, unknown */
+  /* ec0lint-style-disable-next-line indentation, unknown */
     color: red;
 }
 
-/* stylelint-disable indentation */ /* prettier-ignore */
+/* ec0lint-style-disable indentation */ /* prettier-ignore */
 .bar {
     color: red;
 }
-/* stylelint-enable indentation */
+/* ec0lint-style-enable indentation */
 
 /* prettier-ignore */
 .baz {
-    color: red; /* stylelint-disable-line indentation */
+    color: red; /* ec0lint-style-disable-line indentation */
 }
 
-/* stylelint-disable indentation */ /* prettier-ignore */
+/* ec0lint-style-disable indentation */ /* prettier-ignore */
 .bar {
     color: red;
 }

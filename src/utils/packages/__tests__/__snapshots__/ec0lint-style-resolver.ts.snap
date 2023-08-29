@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ec0lintResolver should throw on invalid custom Stylelint paths 1`] = `"Cannot find module 'cwd/does-not-exist' from 'src/utils/packages/ec0lint-style-resolver.ts'"`;
+
+exports[`Ec0lintResolver should throw on invalid custom ec0lint paths 1`] = `"Cannot find module 'cwd/does-not-exist' from 'src/utils/packages/ec0lint-style-resolver.ts'"`;
+
+exports[`StylelintResolver should throw on invalid custom Stylelint paths 1`] = `"Cannot find module 'cwd/does-not-exist' from 'src/utils/packages/ec0lint-style-resolver.ts'"`;

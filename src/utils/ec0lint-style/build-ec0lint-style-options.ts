@@ -3,17 +3,17 @@ import pathIsInside from 'path-is-inside';
 import { URI } from 'vscode-uri';
 import { findPackageRoot } from '../packages';
 // eslint-disable-next-line node/no-unpublished-import
-import type stylelint from 'stylelint';
+import type Ec0lintStyle from 'ec0lint-style';
 import type { RunnerOptions } from './types';
 
 /**
- * Given a document URI, base options, and extension options, builds a Stylelint
+ * Given a document URI, base options, and extension options, builds a ec0lint-style
  * options object. Runner options supersede base options.
  */
-export async function buildStylelintOptions(
+export async function buildEc0lintStyleOptions(
 	uri: string,
 	workspaceFolder?: string,
-	baseOptions: Partial<stylelint.LinterOptions> = {},
+	baseOptions: Partial<Ec0lintStyle.LinterOptions> = {},
 	{
 		config,
 		configFile,
@@ -24,7 +24,7 @@ export async function buildStylelintOptions(
 		reportNeedlessDisables,
 		reportInvalidScopeDisables,
 	}: RunnerOptions = {},
-): Promise<Partial<stylelint.LinterOptions>> {
+): Promise<Partial<Ec0lintStyle.LinterOptions>> {
 	const options = {
 		...baseOptions,
 
@@ -63,13 +63,13 @@ export async function buildStylelintOptions(
 
 	if (documentPath) {
 		if (workspaceFolder && pathIsInside(documentPath, workspaceFolder)) {
-			options.ignorePath = path.join(workspaceFolder, '.stylelintignore');
+			options.ignorePath = path.join(workspaceFolder, '.ec0lint-styleignore');
 		}
 
 		if (options.ignorePath === undefined) {
 			options.ignorePath = path.join(
 				(await findPackageRoot(documentPath)) || path.parse(documentPath).root,
-				'.stylelintignore',
+				'.ec0lint-styleignore',
 			);
 		}
 	}
